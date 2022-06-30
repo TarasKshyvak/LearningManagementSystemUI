@@ -1,11 +1,31 @@
 import React from 'react';
 import './App.css';
-import Button from '@mui/material/Button';
+import AppContainer from './components/AppContainer';
+import { Route, Routes } from 'react-router-dom';
+import { routes } from './components/Routes';
+
 
 function App() {
   return (
     <div className="App" >
-      <Button variant="contained">Hello World</Button>
+      <AppContainer>
+        <Routes>
+          <Route path={routes.home} element={<div>Home</div>}>
+          </Route>
+          <Route path={routes.users} element={<div>users</div>}>
+          </Route>
+          <Route path={routes.courses} element={<div>courses</div>}>
+          </Route>
+          <Route path={routes.groups} element={<div>groups</div>}>
+          </Route>
+          <Route path='*' element={<div>Not found</div>}>
+          </Route>
+          <Route path='/' element={< div > Home</div>}>
+          </Route>
+        </Routes>
+
+      </AppContainer >
+
     </div >
   );
 }
