@@ -22,7 +22,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
+    ...theme.mixins.toolbar
 }));
 
 
@@ -87,12 +87,20 @@ const menuList = [
     },
 ];
 
+
 const Menu = ({ handleDrawerClose, open, theme }) => {
+
     return (
-        <Drawer variant="permanent" open={open}>
+        <Drawer
+            PaperProps={{
+                sx: {
+                    backgroundColor: "#1976d2"
+                }
+            }}
+            variant="permanent" open={open}>
             <DrawerHeader >
                 <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon sx={{ color: '#fff' }} />}
                 </IconButton>
             </DrawerHeader>
             <Divider />
