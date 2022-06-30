@@ -21,12 +21,12 @@ const MenuItem = ({ text, open, image, menuLink }) => {
                             minWidth: 0,
                             mr: open ? 3 : 'auto',
                             justifyContent: 'center',
+                            color: '#fff'
                         }}
                     >
                         {image}
-
                     </ListItemIcon>
-                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, color: '#fff' }} />
                 </ListItemButton>
             </ListItem>
         </Link>
