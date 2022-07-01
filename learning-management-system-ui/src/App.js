@@ -4,6 +4,7 @@ import AppContainer from './components/AppContainer';
 import { Route, Routes } from 'react-router-dom';
 import { routes } from './components/Routes';
 import User from './components/user/User';
+import CoursesPage from './pages/CoursesPage';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
           </Route>
           <Route path={routes.users} element={<User></User>}>
           </Route>
-          <Route path={routes.courses} element={<div>courses</div>}>
+          <Route path={routes.courses} element={<CoursesPage/>}>
           </Route>
           <Route path={routes.groups} element={<div>groups</div>}>
           </Route>

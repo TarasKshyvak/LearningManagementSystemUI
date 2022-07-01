@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import UserService from '../../services/UserService';
+import UserService from '../../services/ApiService';
 import { useFetching } from '../../hooks/useFetching';
 
 const User = () => {
