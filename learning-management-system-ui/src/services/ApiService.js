@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {routes} from '../Components/Routes';
+import {routes} from '../components/Routes';
 
 export default class ApiService {
 

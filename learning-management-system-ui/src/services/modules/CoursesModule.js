@@ -1,5 +1,5 @@
 import ApiService from "../ApiService";
-import { routes } from "../../Components/Routes";
+import { routes } from "../../components/Routes";
 
 export default class CoursesModule {
 

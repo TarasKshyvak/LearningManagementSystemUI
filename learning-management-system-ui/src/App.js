@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import AppContainer from './Components/AppContainer';
+import AppContainer from './components/AppContainer';
 import { Route, Routes } from 'react-router-dom';
-import { routes } from './Components/Routes';
-import User from './Components/user/User';
+import { routes } from './components/Routes';
+import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 
 
