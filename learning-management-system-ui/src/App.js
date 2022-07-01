@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import AppContainer from './components/AppContainer';
+import AppContainer from './Components/AppContainer';
 import { Route, Routes } from 'react-router-dom';
-import { routes } from './components/Routes';
-import User from './components/user/User';
+import { routes } from './Components/Routes';
+import User from './Components/user/User';
+import CoursesPage from './pages/CoursesPage';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
           </Route>
           <Route path={routes.users} element={<User></User>}>
           </Route>
-          <Route path={routes.courses} element={<div>courses</div>}>
+          <Route path={routes.courses} element={<CoursesPage/>}>
           </Route>
           <Route path={routes.groups} element={<div>groups</div>}>
           </Route>
