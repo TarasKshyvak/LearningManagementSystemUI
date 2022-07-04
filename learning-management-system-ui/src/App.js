@@ -16,7 +16,7 @@ function App() {
           </Route>
           <Route path={routes.users} element={<User></User>}>
           </Route>
-          <Route path={routes.courses} element={<CoursesPage/>}>
+          <Route path={routes.courses} element={<div><CoursesPage/></div>}>
           </Route>
           <Route path={routes.groups} element={<div>groups</div>}>
           </Route>

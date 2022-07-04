@@ -12,16 +12,16 @@ export default class ApiService {
         return response;
     }
 
-    static async post(uri) {
+    static async post(uri, body) {
         const url = `${routes.apiUrl}${uri}`;
-        const response = await axios.post(url);
+        const response = await axios.post(url, body);
 
         return response;
     }
 
-    static async put(uri) {
+    static async put(uri, body) {
         const url = `${routes.apiUrl}${uri}`;
-        const response = await axios.put(url);
+        const response = await axios.put(url, body);
 
         return response;
     }
