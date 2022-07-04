@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import {styled, useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MailIcon from '@mui/icons-material/Mail';
 import Menu from './Menu';
-import { alpha } from '@mui/material/styles';
+import {alpha} from '@mui/material/styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import InputBase from '@mui/material/InputBase';
 
@@ -16,7 +16,7 @@ const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+})(({theme, open}) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -34,7 +34,7 @@ const AppBar = styled(MuiAppBar, {
 
 
 //
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -49,7 +49,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -59,7 +59,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -88,8 +88,8 @@ const NavigationBar = () => {
     return (
         <div>
             <AppBar position="fixed" open={open}>
-                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Box sx={{ display: 'flex' }}>
+                <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Box sx={{display: 'flex'}}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -97,19 +97,18 @@ const NavigationBar = () => {
                             edge="start"
                             sx={{
                                 marginRight: 5,
-                                ...(open && { display: 'none' }),
+                                ...(open && {display: 'none'}),
                             }}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
-                        <MenuBookIcon sx={{ fontSize: '30px', mr: '5px' }} />
+                        <MenuBookIcon sx={{fontSize: '30px', mr: '5px'}}/>
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' } }}
+                            sx={{display: {xs: 'none', sm: 'block'}}}
                         >
-
                             Wee-wee
                         </Typography>
                         <Search>
@@ -118,11 +117,11 @@ const NavigationBar = () => {
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
+                                inputProps={{'aria-label': 'search'}}
                             />
                         </Search>
                     </Box>
-                    <Box sx={{ display: 'flex' }}>
+                    <Box sx={{display: 'flex'}}>
                         <MailIcon></MailIcon>
                     </Box>
                 </Toolbar>
