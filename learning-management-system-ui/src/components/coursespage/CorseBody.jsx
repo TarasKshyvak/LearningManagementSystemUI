@@ -2,12 +2,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import EditButton from "./EditButton";
 import { Grid, Typography } from "@mui/material";
-import Text from "./Text";
 import DeleteButton from "./DeleteButton";
 
 const CorseBody = ({ cours }) => {
   return (
-    <Box>
+    <Box >
       <Grid
         container
         direction="column"
@@ -15,7 +14,7 @@ const CorseBody = ({ cours }) => {
         alignItems="flex-start"
       >
         <Typography align="left">
-          Description: <Text />
+          Description: {cours.description}
         </Typography>
         <Grid container direction="row" justifyContent="space-between">
           <Box sx={{ mt: 5 }}>Start Date: {new Date( cours.startedAt).toLocaleDateString()}</Box>

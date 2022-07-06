@@ -23,7 +23,7 @@ const validationSchema = yup.object({
     .required("Course Description is required"),
 });
 
-const AddUserModel = ({ handleClose }) => {
+const WithMaterialUI = ({ handleClose }) => {
   const formik = useFormik({
     initialValues: {
       startedAt: new Date(),
@@ -108,4 +108,4 @@ const AddUserModel = ({ handleClose }) => {
     </div>
   );
 };
-export default AddUserModel;
+export default WithMaterialUI;
