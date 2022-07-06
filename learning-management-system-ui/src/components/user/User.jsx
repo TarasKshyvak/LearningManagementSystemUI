@@ -7,10 +7,17 @@ import {useFetching} from '../../hooks/useFetching';
 import UserForm from './UserForm';
 import {Formik, Form, Field} from 'formik';
 import Box from "@mui/material/Box";
-import {Button} from "@mui/material";
+import {Button, FormControl, Select} from "@mui/material";
 import FormModal from "./FormModal";
 import UserTable from "./UserTable";
 import Typography from "@mui/material/Typography";
+import MenuItem from "../MenuItem";
+
+import InputLabel from '@mui/material/InputLabel';
+
+import FormHelperText from '@mui/material/FormHelperText';
+import Selector from "./Selector";
+
 
 const User = () => {
     const [users, setUsers] = useState([]);
@@ -22,6 +29,14 @@ const User = () => {
         const response = await UserService.getUsers();
         setUsers(response.data);
     });
+
+    const addUser = (newUser) => {
+        setUsers([newUser, ...users]);
+        console.log(users);
+    }
+    const deleteUser = (user)=>{
+
+    }
 
     ///For modal
     const [open, setOpen] = useState(false);
@@ -35,14 +50,15 @@ const User = () => {
                 <Button onClick={handleOpen} variant="contained" color="success">
                     Add user
                 </Button>
-                <FormModal handleClose={handleClose} open={open} children={ <UserForm></UserForm>}></FormModal>
+                <FormModal handleClose={handleClose} open={open} children={<UserForm create={addUser}></UserForm>}></FormModal>
             </Box>
 
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                {userError &&
+                {userError ?
                     <div>Error - {userError}</div>
+                    :
+                    <UserTable openModalChange={handleOpen} users={users} deleteRow={deleteUser}></UserTable>
                 }
-                <UserTable openModalChange={handleOpen} users={users}></UserTable>
             </Box>
         </div>
     );

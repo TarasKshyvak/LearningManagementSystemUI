@@ -34,7 +34,7 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
 }));
 
 
-export default function UserTable({users, openModalChange}) {
+export default function UserTable({users, openModalChange, deleteRow}) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: '85%'}} aria-label="customized table">
@@ -69,7 +69,7 @@ export default function UserTable({users, openModalChange}) {
                                     <Fab onClick={openModalChange} color="secondary" size={'small'} aria-label="edit">
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
-                                    <Fab onClick={openModalChange} sx={{backgroundColor: 'red'}} size={'small'} aria-label="remove">
+                                    <Fab onClick={deleteRow} sx={{backgroundColor: 'red'}} size={'small'} aria-label="remove">
                                         <DeleteForeverIcon sx={{fontSize: '20px', color: '#fff'}}/>
                                     </Fab>
                                 </Box>

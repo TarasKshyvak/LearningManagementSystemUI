@@ -8,7 +8,7 @@ export default class UserService {
     }
 
     static async post(user) {
-        const response = ApiService.post(routes.users, user);
+        const response = await ApiService.post(routes.users, user);
         return response;
     }
 }

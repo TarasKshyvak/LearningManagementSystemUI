@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { routes } from '../components/Routes';
+import {routes} from '../components/Routes';
 
 export default class ApiService {
 
@@ -13,9 +13,16 @@ export default class ApiService {
         return response;
     }
 
-    static async post(uri, resource) {
-        const url = `${routes.apiUrl}${uri}`;
-        const response = await axios.post(url);
+    static async post(uri, body) {
+        const response = {
+            data: null,
+            errors: null
+        }
+        await axios.post(routes.apiUrl + uri, body, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => response.data = res.data).catch(e => response.errors = e.response.data.errors);
 
         return response;
     }

@@ -1,45 +1,92 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {Formik, Form, useField, useFormikContext, useFormik} from "formik";
 import * as Yup from "yup";
-import styled from "@emotion/styled";
-
-import {Button, Stack, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, Select, Stack, TextField, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+import MenuItem from "../MenuItem";
+import Selector from "./Selector";
+import ApiService from "../../services/ApiService";
+import UserService from "../../services/UserService";
+
+const charactersOnly = /^[A-Za-z]+$/;
+
+const styledElement = {
+    marginBottom: '20px'
+}
+
+const getGenderCode = (gender) => {
+    switch (gender) {
+        case 'Male':
+            return 0;
+        case 'Female':
+            return 1;
+        case 'Other':
+            return 2;
+        default:
+            return 2;
+    }
+}
+
+const selectData=[{key: 0, value: 'Male'},{key: 1, value: 'Female'},{key: 2, value: 'Other'}];
 
 const validationSchema = Yup.object({
     firstName: Yup.string()
         .max(15, "First name must be 15 characters or less")
+        .matches(charactersOnly, "First name should contains characters only")
         .required("First name is required"),
     lastName: Yup.string()
         .min(2, "Last name should be min 2 letters")
         .max(20, "Last name must be 20 characters or less")
+        .matches(charactersOnly, "Last name should contains characters only")
         .required("Last name is required"),
-    // userName: Yup.string()
-    //     .max(12, "Username must be 12 characters only")
-    //     .required("required"),
+    userName: Yup.string()
+        .min(5, "Username must be min 12 characters only")
+        .max(12, "Username must be max 12 characters only")
+        .required("Username is required"),
     email: Yup.string()
         .email("Invalid email address")
-        .required("Required")
+        .required("Email is required"),
+    birthday: Yup.date()
+        .max(new Date())
+        .required("Birthday is required"),
+    gender: Yup.number()
+        .required("Gender is required")
 });
 
 
-const UserForm = () => {
+const UserForm = ({create}) => {
+
+    const handleChange = (event) => {
+        formik.setFieldValue("gender", event.target.value);
+    };
+
     const formik = useFormik({
         initialValues: {
             firstName: "",
             lastName: "",
             userName: "",
-            email: ""
+            email: "",
+            birthday: new Date(),
+            gender: null
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit:  async(values) => {
+
+           let data = JSON.stringify(values, null, 2);
+           const res = await UserService.post(data);
+           console.log('Result', res.errors);
+           //TODO: Fix
+            create(values);
+
         },
     });
     return (
-        <Box sx={{padding: '50px 20px'}}>
-            <form style={{width: '400px'}} onSubmit={formik.handleSubmit}>
-
+        <Box sx={{padding: '20px 20px', textAlign: 'center'}}>
+            <Typography variant={'h5'} sx={{mb: '30px', fontWeight: '900'}}>Adding new user</Typography>
+            <form style={{width: '380px', textAlign: 'left'}} onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
                     id="email"
@@ -50,9 +97,21 @@ const UserForm = () => {
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
+                    sx={styledElement}
                 />
                 <TextField
-                    sx={{fontSize: '50px'}}
+                    fullWidth
+                    id="userName"
+                    name="userName"
+                    label="Username"
+                    variant="outlined"
+                    value={formik.values.userName}
+                    onChange={formik.handleChange}
+                    error={formik.touched.userName && Boolean(formik.errors.userName)}
+                    helperText={formik.touched.userName && formik.errors.userName}
+                    sx={styledElement}
+                />
+                <TextField
                     fullWidth
                     id="firstName"
                     name="firstName"
@@ -62,6 +121,7 @@ const UserForm = () => {
                     onChange={formik.handleChange}
                     error={formik.touched.firstName && Boolean(formik.errors.firstName)}
                     helperText={formik.touched.firstName && formik.errors.firstName}
+                    sx={styledElement}
                 />
                 <TextField
                     fullWidth
@@ -73,10 +133,47 @@ const UserForm = () => {
                     onChange={formik.handleChange}
                     error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                     helperText={formik.touched.lastName && formik.errors.lastName}
+                    sx={styledElement}
                 />
 
-                <Button color="primary" variant="contained" fullWidth type="submit">
-                    Submit
+                <LocalizationProvider sx={styledElement} dateAdapter={AdapterDateFns}>
+                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Typography>
+                            Birthday:
+                        </Typography>
+                        <DatePicker
+                            name="birthday"
+                            openTo="year"
+                            views={['year', 'month', 'day']}
+                            label="Birthday"
+                            value={formik.values.birthday}
+                            onChange={(newValue) => {
+                                formik.setFieldValue("birthday", newValue);
+                            }}
+                            renderInput={(params) => {
+                                return (<TextField sx={{maxWidth: '70%'}} {...params}
+                                                   error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+                                                   helperText={formik.touched.birthday && formik.errors.birthday}/>);
+                            }}
+                        />
+                    </Box>
+                </LocalizationProvider>
+
+                <Box sx={{mt: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <Typography>
+                        Gender:
+                    </Typography>
+                    <Selector handleChange={handleChange} items={selectData} labelName={'Gender'} value={formik.values.gender}/>
+                </Box>
+
+                <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    type="submit"
+                    sx={{mt: '20px'}}
+                >
+                    Create
                 </Button>
             </form>
         </Box>
@@ -84,66 +181,3 @@ const UserForm = () => {
 };
 export default UserForm;
 
-//
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import { useFormik } from 'formik';
-// import * as yup from 'yup';
-// import {Button, TextField} from "@mui/material";
-//
-//
-// const validationSchema = yup.object({
-//     email: yup
-//         .string('Enter your email')
-//         .email('Enter a valid email')
-//         .required('Email is required'),
-//     password: yup
-//         .string('Enter your password')
-//         .min(8, 'Password should be of minimum 8 characters length')
-//         .required('Password is required'),
-// });
-//
-// const WithMaterialUI = () => {
-//     const formik = useFormik({
-//         initialValues: {
-//             email: 'foobar@example.com',
-//             password: 'foobar',
-//         },
-//         validationSchema: validationSchema,
-//         onSubmit: (values) => {
-//             alert(JSON.stringify(values, null, 2));
-//         },
-//     });
-//
-//     return (
-//         <div>
-//             <form onSubmit={formik.handleSubmit}>
-//                 <TextField
-//                     fullWidth
-//                     id="email"
-//                     name="email"
-//                     label="Email"
-//                     value={formik.values.email}
-//                     onChange={formik.handleChange}
-//                     error={formik.touched.email && Boolean(formik.errors.email)}
-//                     helperText={formik.touched.email && formik.errors.email}
-//                 />
-//                 <TextField
-//                     fullWidth
-//                     id="password"
-//                     name="password"
-//                     label="Password"
-//                     type="password"
-//                     value={formik.values.password}
-//                     onChange={formik.handleChange}
-//                     error={formik.touched.password && Boolean(formik.errors.password)}
-//                     helperText={formik.touched.password && formik.errors.password}
-//                 />
-//                 <Button color="primary" variant="contained" fullWidth type="submit">
-//                     Submit
-//                 </Button>
-//             </form>
-//         </div>
-//     );
-// };
-// export default  WithMaterialUI;
