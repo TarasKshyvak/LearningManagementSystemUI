@@ -6,7 +6,6 @@ import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 
-
 function App() {
   return (
     <div className="App" >
