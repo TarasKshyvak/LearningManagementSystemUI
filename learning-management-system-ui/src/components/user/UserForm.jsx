@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from "react";
-import {Formik, Form, useField, useFormikContext, useFormik} from "formik";
+import React, {useState, useContext} from "react";
+import {useFormik} from "formik";
 import * as Yup from "yup";
-import {Button, FormControl, InputLabel, Select, Stack, TextField, Typography} from "@mui/material";
+import {Button, TextField, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
-import MenuItem from "../MenuItem";
 import Selector from "./Selector";
-import ApiService from "../../services/ApiService";
 import UserService from "../../services/UserService";
+import {UserErrorContext} from "../Contexts";
+import {getGenderCode} from '../Helpers';
 
 const charactersOnly = /^[A-Za-z]+$/;
 
@@ -17,20 +17,7 @@ const styledElement = {
     marginBottom: '20px'
 }
 
-const getGenderCode = (gender) => {
-    switch (gender) {
-        case 'Male':
-            return 0;
-        case 'Female':
-            return 1;
-        case 'Other':
-            return 2;
-        default:
-            return 2;
-    }
-}
-
-const selectData=[{key: 0, value: 'Male'},{key: 1, value: 'Female'},{key: 2, value: 'Other'}];
+const selectData = [{key: 0, value: 'Male'}, {key: 1, value: 'Female'}, {key: 2, value: 'Other'}];
 
 const validationSchema = Yup.object({
     firstName: Yup.string()
@@ -58,10 +45,11 @@ const validationSchema = Yup.object({
 
 
 const UserForm = ({create}) => {
-
     const handleChange = (event) => {
         formik.setFieldValue("gender", event.target.value);
     };
+    const {setUserErrors} = useContext(UserErrorContext);
+    const [isDisabledBtn, setDisabledBtn] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -70,17 +58,24 @@ const UserForm = ({create}) => {
             userName: "",
             email: "",
             birthday: new Date(),
-            gender: null
+            gender: ''
         },
         validationSchema: validationSchema,
-        onSubmit:  async(values) => {
 
-           let data = JSON.stringify(values, null, 2);
-           const res = await UserService.post(data);
-           console.log('Result', res.errors);
-           //TODO: Fix
-            create(values);
+        onSubmit: async (values) => {
+            setUserErrors([]);
+            setDisabledBtn(true);
+            let data = JSON.stringify(values, null, 2);
+            const res = await UserService.post(data);
 
+            if (res.errors) {
+                setUserErrors([res.errors]);
+            } else {
+                const model = res.data;
+                model.gender = getGenderCode(model.gender);
+                create(model);
+            }
+            setDisabledBtn(false);
         },
     });
     return (
@@ -152,6 +147,7 @@ const UserForm = ({create}) => {
                             }}
                             renderInput={(params) => {
                                 return (<TextField sx={{maxWidth: '70%'}} {...params}
+                                                   value=''
                                                    error={formik.touched.birthday && Boolean(formik.errors.birthday)}
                                                    helperText={formik.touched.birthday && formik.errors.birthday}/>);
                             }}
@@ -163,10 +159,12 @@ const UserForm = ({create}) => {
                     <Typography>
                         Gender:
                     </Typography>
-                    <Selector handleChange={handleChange} items={selectData} labelName={'Gender'} value={formik.values.gender}/>
+                    <Selector handleChange={handleChange} items={selectData} labelName={'Gender'}
+                              value={formik.values.gender}/>
                 </Box>
 
                 <Button
+                    disabled={isDisabledBtn}
                     color="primary"
                     variant="contained"
                     fullWidth

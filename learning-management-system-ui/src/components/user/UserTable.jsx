@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +11,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import {Fab} from "@mui/material";
 import Box from "@mui/material/Box";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import SubmitDialog from "./SubmitDialog";
+import UserService from "../../services/UserService";
 
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
@@ -23,21 +25,23 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({theme}) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+export default function UserTable({users, openModalChange, removeUser}) {
+    const [openDialogRemove, setOpenDialogRemove] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
 
+    const handleSubmitRemove = () => {
+        const response = UserService.delete(currentUser.id);
+        currentUser.isActive = false;
+        if(!response.errors){
+            removeUser(currentUser);
+        }
 
-export default function UserTable({users, openModalChange, deleteRow}) {
+        setOpenDialogRemove(false);
+    }
+
     return (
         <TableContainer component={Paper}>
-            <Table sx={{minWidth: '85%'}} aria-label="customized table">
+            <Table sx={{minWidth: '80%'}} aria-label="customized table">
                 <TableHead>
                     <TableRow>
                         <StyledTableCell align="center">Username</StyledTableCell>
@@ -52,10 +56,10 @@ export default function UserTable({users, openModalChange, deleteRow}) {
                 </TableHead>
                 <TableBody>
                     {users.map((row) => (
-                        <StyledTableRow key={row.name}>
+                        <TableRow sx={{backgroundColor: row.isActive ? '#fff' : '#f5b7b7'}} key={row.id}>
                             <StyledTableCell align="center"
                             >
-                                    {row.userName}
+                                {row.userName}
                             </StyledTableCell>
                             <StyledTableCell align="center">{row.firstName}</StyledTableCell>
                             <StyledTableCell align="center">{row.lastName}</StyledTableCell>
@@ -64,20 +68,27 @@ export default function UserTable({users, openModalChange, deleteRow}) {
                                 align="center">{new Date(row.birthday).toLocaleDateString()}</StyledTableCell>
                             <StyledTableCell align="center">{row.gender}</StyledTableCell>
                             <StyledTableCell align="center">{row.isActive ? '+' : '-'}</StyledTableCell>
-                            <StyledTableCell align ="center">
-                                <Box sx={{display: 'flex', justifyContent: 'space-evenly'}} >
+                            <StyledTableCell align="center">
+                                <Box sx={{display: 'flex', justifyContent: 'space-evenly'}}>
                                     <Fab onClick={openModalChange} color="secondary" size={'small'} aria-label="edit">
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
-                                    <Fab onClick={deleteRow} sx={{backgroundColor: 'red'}} size={'small'} aria-label="remove">
+                                    <Fab disabled={!row.isActive} onClick={() => {
+                                        setCurrentUser(row);
+                                        setOpenDialogRemove(true);
+                                    }}
+                                         color="error" size={'small'}
+                                         aria-label="remove">
                                         <DeleteForeverIcon sx={{fontSize: '20px', color: '#fff'}}/>
                                     </Fab>
                                 </Box>
                             </StyledTableCell>
-                        </StyledTableRow>
+                        </TableRow>
                     ))}
                 </TableBody>
             </Table>
+            <SubmitDialog open={openDialogRemove} handleSubmit={handleSubmitRemove}
+                          handleClose={() => setOpenDialogRemove(false)}></SubmitDialog>
         </TableContainer>
     );
 }

@@ -11,4 +11,9 @@ export default class UserService {
         const response = await ApiService.post(routes.users, user);
         return response;
     }
+
+    static async delete(id){
+        const response = await ApiService.delete(routes.users+'/'+id);
+        return response;
+    }
 }
