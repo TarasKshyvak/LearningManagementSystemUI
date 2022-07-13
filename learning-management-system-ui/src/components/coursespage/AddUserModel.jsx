@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import ReactDOM from "react-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, Grid, TextField } from "@mui/material";
+import { Alert, Button, Grid, Portal, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { Box } from "@mui/system";
 import CoursesModule from "../../services/modules/CoursesModule";
+import ErrorMessage from "./ErrorMessage";
+import Modall from "./Modall";
 
 const validationSchema = yup.object({
-  startedAt: yup
-  .date().min(new Date()),
+  startedAt: yup.date().min(new Date()),
 
   name: yup
     .string("Enter Course Name")
@@ -23,7 +24,12 @@ const validationSchema = yup.object({
     .required("Course Description is required"),
 });
 
-const AddUserModel = ({ handleClose }) => {
+export default function AddUserModel({ handleClose, container }) {
+  const [value, setValue] = React.useState(null);
+  const [isDisabled, setDisabled] = useState(false);
+
+  const[a, setA]  = useState([]);
+
   const formik = useFormik({
     initialValues: {
       startedAt: new Date(),
@@ -31,15 +37,27 @@ const AddUserModel = ({ handleClose }) => {
       description: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setDisabled(true);
+      
+      setA([1, 2, 4]);
       let data = JSON.stringify(values, null, 2);
-      CoursesModule.CreateCours(data);
-      handleClose();
+      let response = await CoursesModule.CreateCours(data);
+      if (response.errors === null) {
+        handleClose(true);
+      } else {
+      
+      } 
+
+      setDisabled(false);
+      console.log(response);
     },
   });
-  const [value, setValue] = React.useState(null);
+
+  const [err, setErr] = useState([1, 2]);
   return (
-    <div>
+    <Box width="100%" height="100%">
+      <h1>Add New Cours</h1>
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
@@ -97,15 +115,24 @@ const AddUserModel = ({ handleClose }) => {
           justifyContent="space-between"
           alignItems="flex-end"
         >
-          <Button onClick={handleClose} color="primary" variant="contained">
+          <Button
+            disabled={isDisabled}
+            onClick={handleClose}
+            color="primary"
+            variant="contained"
+          >
             Cancel
           </Button>
-          <Button color="primary" variant="contained" type="submit">
+          <Button
+            disabled={isDisabled}
+            color="primary"
+            variant="contained"
+            type="submit"
+          >
             Submit
           </Button>
         </Grid>
       </form>
-    </div>
+    </Box>
   );
-};
-export default AddUserModel;
+}

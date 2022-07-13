@@ -69,7 +69,7 @@ export default function UserTable({users, openModalChange, deleteRow}) {
                                     <Fab onClick={openModalChange} color="secondary" size={'small'} aria-label="edit">
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
-                                    <Fab onClick={deleteRow} sx={{backgroundColor: 'red'}} size={'small'} aria-label="remove">
+                                    <Fab onClick={deleteRow} color='error' size={'small'} aria-label="remove">
                                         <DeleteForeverIcon sx={{fontSize: '20px', color: '#fff'}}/>
                                     </Fab>
                                 </Box>

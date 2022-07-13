@@ -12,9 +12,9 @@ export default class CoursesModule {
 
      static async CreateCours(body)
      {
-        let cours = ApiService.post(routes.courses, body);
+        let cours = await ApiService.post(routes.courses, body);
 
-        return (await cours).status;
+        return await cours;
      }
 
      static async getCoursbyID(id)
