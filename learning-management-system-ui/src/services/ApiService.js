@@ -1,15 +1,16 @@
 import axios from 'axios';
 import {routes} from '../components/Routes';
 
+const response = {
+    data: null,
+    errors: null
+}
+
 export default class ApiService {
 
     static async get(uri) {
-        console.log("Hi")
         const url = `${routes.apiUrl}${uri}`;
-        console.log(routes.apiUrl);
         const response = await axios.get(url);
-        console.log(response);
-
         return response;
     }
 
@@ -22,22 +23,33 @@ export default class ApiService {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(res => response.data = res.data).catch(e => response.errors = e.response.data.errors);
+        }).then(res => response.data = res.data)
+            .catch(e => response.errors = e.response.data.errors);
 
         return response;
     }
 
-    static async put(uri) {
-        const url = `${routes.apiUrl}${uri}`;
-        const response = await axios.put(url);
+    static async put(uri, body) {
+        const response = {
+            data: null,
+            errors: null
+        }
+        await axios.put(routes.apiUrl + uri, body, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => response.data = res.data)
+            .catch(e => response.errors = e.response.data.errors);
 
         return response;
     }
 
+    //TODO: Rewrite
     static async delete(uri) {
         const url = `${routes.apiUrl}${uri}`;
-        const response = await axios.delete(url);
-
+        const response = await axios.delete(url)
+            .then(res => this.response.data = res.data)
+            .catch(e => this.response.errors = e.response.data.errors);
         return response;
     }
 }

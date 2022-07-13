@@ -89,7 +89,7 @@ const NavigationBar = () => {
         <div>
             <AppBar position="fixed" open={open}>
                 <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Box sx={{display: 'flex'}}>
+                    <Box sx={{display: 'flex', alignItems: 'center'}}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -109,7 +109,7 @@ const NavigationBar = () => {
                             component="div"
                             sx={{display: {xs: 'none', sm: 'block'}}}
                         >
-                            Wee-wee
+                            LMS
                         </Typography>
                         <Search>
                             <SearchIconWrapper>
