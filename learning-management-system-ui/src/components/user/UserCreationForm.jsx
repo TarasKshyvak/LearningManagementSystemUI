@@ -44,7 +44,7 @@ const validationSchema = Yup.object({
 });
 
 
-const UserCreationForm = ({create}) => {
+const UserCreationForm = ({create, handleClose}) => {
     const handleChange = (event) => {
         formik.setFieldValue("gender", event.target.value);
     };
@@ -77,10 +77,11 @@ const UserCreationForm = ({create}) => {
                 setUserErrors(res.errors);
             } else {
                 const model = res.data;
-                model.gender = getGenderCode(model.gender);
                 create(model);
+                handleClose();
             }
             setDisabledBtn(false);
+
         },
     });
     return (

@@ -58,7 +58,7 @@ function User() {
 
                 <UserErrorContext.Provider value={{userErrors, setUserErrors}}>
                     <FormModal handleClose={handleClose} open={open} errors={userErrors}>
-                        <UserCreationForm create={addUser}></UserCreationForm>
+                        <UserCreationForm create={addUser} handleClose={handleClose}></UserCreationForm>
                     </FormModal>
                 </UserErrorContext.Provider>
 
