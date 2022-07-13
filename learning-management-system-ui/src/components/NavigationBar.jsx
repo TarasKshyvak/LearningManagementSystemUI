@@ -89,7 +89,7 @@ const NavigationBar = () => {
         <div>
             <AppBar position="fixed" open={open}>
                 <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Box sx={{display: 'flex'}}>
+                    <Box sx={{display: 'flex', alignItems: 'center'}}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -107,13 +107,13 @@ const NavigationBar = () => {
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{display: {xs: 'none', sm: 'block'}}}
+                            sx={{display: {xs: 'none', sm: 'block', marginLeft: 15, marginRight: 15}}}
                         >
-                            Wee-wee
+                            LMS
                         </Typography>
                         <Search>
                             <SearchIconWrapper>
-
+                                {/* Todo icon upd search layout  */}
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"

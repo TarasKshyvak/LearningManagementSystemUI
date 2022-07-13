@@ -1,0 +1,23 @@
+.groups_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.group_item {
+    max-width: 99%;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 20px;
+    padding-top: 5px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.group_accordion {
+    border: 2px solid lightgray;
+}
+
+.acc_details {
+    display: flex;
+    justify-content: space-between;
+}
