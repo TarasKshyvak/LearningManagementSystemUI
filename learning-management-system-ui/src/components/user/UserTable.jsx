@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +11,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import {Fab} from "@mui/material";
 import Box from "@mui/material/Box";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import SubmitDialog from "./SubmitDialog";
+import UserService from "../../services/UserService";
+import FormModal from "./FormModal";
+import UserUpdateForm from "./UserUpdateForm";
+import {getGenderCode} from "../Helpers";
 
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
@@ -23,61 +28,86 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
     },
 }));
 
-const StyledTableRow = styled(TableRow)(({theme}) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+export default function UserTable({users, removeUser}) {
+    const [openDialogRemove, setOpenDialogRemove] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    }
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    }
 
-export default function UserTable({users, openModalChange, deleteRow}) {
+    const handleSubmitRemove = () => {
+        const response = UserService.delete(currentUser.id);
+        currentUser.isActive = false;
+        if (!response.errors) {
+            removeUser(currentUser);
+        }
+        setOpenDialogRemove(false);
+    }
+
+    const alignment = 'left';
+
     return (
         <TableContainer component={Paper}>
-            <Table sx={{minWidth: '85%'}} aria-label="customized table">
+            <Table sx={{minWidth: '80%'}} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <StyledTableCell align="center">Username</StyledTableCell>
-                        <StyledTableCell align="center">First name</StyledTableCell>
-                        <StyledTableCell align="center">Last name</StyledTableCell>
-                        <StyledTableCell align="center">Email</StyledTableCell>
-                        <StyledTableCell align="center">Birthday</StyledTableCell>
-                        <StyledTableCell align="center">Gender</StyledTableCell>
-                        <StyledTableCell align="center">Is active</StyledTableCell>
-                        <StyledTableCell align="center"></StyledTableCell>
+                        <StyledTableCell align={alignment}>Username</StyledTableCell>
+                        <StyledTableCell align={alignment}>First name</StyledTableCell>
+                        <StyledTableCell align={alignment}>Last name</StyledTableCell>
+                        <StyledTableCell align={alignment}>Email</StyledTableCell>
+                        <StyledTableCell align={alignment}>Birthday</StyledTableCell>
+                        <StyledTableCell align={alignment}>Gender</StyledTableCell>
+                        {/*<StyledTableCell align={alignment}>Is active</StyledTableCell>*/}
+                        <StyledTableCell align={alignment}></StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {users.map((row) => (
-                        <StyledTableRow key={row.name}>
-                            <StyledTableCell align="center"
+                        <TableRow sx={{backgroundColor: row.isActive ? '#fff' : '#ffa6a6'}} key={row.id}>
+                            <StyledTableCell align={alignment}
                             >
-                                    {row.userName}
+                                {row.userName}
                             </StyledTableCell>
-                            <StyledTableCell align="center">{row.firstName}</StyledTableCell>
-                            <StyledTableCell align="center">{row.lastName}</StyledTableCell>
-                            <StyledTableCell align="center">{row.email}</StyledTableCell>
+                            <StyledTableCell align={alignment}>{row.firstName}</StyledTableCell>
+                            <StyledTableCell align={alignment}>{row.lastName}</StyledTableCell>
+                            <StyledTableCell align={alignment}>{row.email}</StyledTableCell>
                             <StyledTableCell
-                                align="center">{new Date(row.birthday).toLocaleDateString()}</StyledTableCell>
-                            <StyledTableCell align="center">{row.gender}</StyledTableCell>
-                            <StyledTableCell align="center">{row.isActive ? '+' : '-'}</StyledTableCell>
-                            <StyledTableCell align ="center">
-                                <Box sx={{display: 'flex', justifyContent: 'space-evenly'}} >
-                                    <Fab onClick={openModalChange} color="secondary" size={'small'} aria-label="edit">
+                                align={alignment}>{new Date(row.birthday).toLocaleDateString()}</StyledTableCell>
+                            <StyledTableCell align={alignment}>{getGenderCode(row.gender)}</StyledTableCell>
+                            {/*<StyledTableCell align={alignment}>{row.isActive ? '+' : '-'}</StyledTableCell>*/}
+                            <StyledTableCell align={alignment}>
+                                <Box sx={{display: 'flex', justifyContent: 'space-evenly'}}>
+                                    <Fab onClick={()=>{handleOpenModal(true);setCurrentUser(row);}} color="secondary" size={'small'} aria-label="edit">
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
-                                    <Fab onClick={deleteRow} sx={{backgroundColor: 'red'}} size={'small'} aria-label="remove">
+
+                                    <Fab disabled={!row.isActive} onClick={() => {
+                                        setCurrentUser(row);
+                                        setOpenDialogRemove(true);
+                                    }}
+                                         color="error" size={'small'}
+                                         aria-label="remove">
+
                                         <DeleteForeverIcon sx={{fontSize: '20px', color: '#fff'}}/>
                                     </Fab>
+
                                 </Box>
                             </StyledTableCell>
-                        </StyledTableRow>
+                        </TableRow>
                     ))}
                 </TableBody>
             </Table>
+            <SubmitDialog open={openDialogRemove} handleSubmit={handleSubmitRemove}
+                          handleClose={() => setOpenDialogRemove(false)}></SubmitDialog>
+
+            <FormModal handleClose={handleCloseModal} open={openModal}>
+              <UserUpdateForm user={currentUser} create={()=>''}></UserUpdateForm>
+            </FormModal>
         </TableContainer>
     );
 }
