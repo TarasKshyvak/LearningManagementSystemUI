@@ -1,26 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import UserService from '../../services/UserService';
 import {useFetching} from '../../hooks/useFetching';
-import UserForm from './UserForm';
+import UserCreationForm from './UserCreationForm';
 import Box from "@mui/material/Box";
-import {Button} from "@mui/material";
 import FormModal from "./FormModal";
 import UserTable from "./UserTable";
 import {UserErrorContext} from "../Contexts";
 import {getGenderCode} from '../Helpers';
+import FloatingButton from "./FloatingButton";
+import Typography from "@mui/material/Typography";
+
 
 function User() {
     const [users, setUsers] = useState([]);
     const [userErrors, setUserErrors] = useState([]);
 
-    //Users
     useEffect(() => {
         fetching();
     }, []);
 
     const [fetching, userError] = useFetching(async () => {
         const response = await UserService.getUsers();
-        const data = response.data.map(model=>{return {...model, gender: getGenderCode(model.gender)}});
+        const data = response.data;
         setUsers(data);
     });
 
@@ -40,17 +41,27 @@ function User() {
     const handleClose = () => setOpen(false);
 
     return (
-        <div style={{padding: '0px 100px'}}>
+        <div style={{padding: '0px 125px'}}>
 
-            <Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-end', mb: '50px'}}>
-                <Button onClick={()=>{ setUserErrors([]); handleOpen();}} variant="contained" color="success">
-                    Add user
-                </Button>
+            <Box sx={{width: '100%', display: 'flex', justifyContent: 'flex-start', p: '15px 0'}}>
+                <Typography sx={{fontWeight: 900, fontSize: '40px'}}>
+                    Users
+                </Typography>
+            </Box>
+
+            <Box>
+                <FloatingButton sx={{position: 'fixed', bottom: '40px', right: '40px'}} onClick={() => {
+                    setUserErrors([]);
+                    handleOpen();
+                }}>
+                </FloatingButton>
+
                 <UserErrorContext.Provider value={{userErrors, setUserErrors}}>
-                    <FormModal handleClose={handleClose} open={open}>
-                        <UserForm create={addUser}></UserForm>
+                    <FormModal handleClose={handleClose} open={open} errors={userErrors}>
+                        <UserCreationForm create={addUser}></UserCreationForm>
                     </FormModal>
                 </UserErrorContext.Provider>
+
             </Box>
 
             <Box sx={{display: 'flex', justifyContent: 'center'}}>

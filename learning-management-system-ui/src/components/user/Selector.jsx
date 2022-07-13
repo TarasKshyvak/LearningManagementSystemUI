@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function Selector({value, handleChange, items, labelName, ...props}) {
+export default function Selector({value = null, handleChange, items, labelName, ...props}) {
 
     return (
         <Box sx={{ minWidth: 120 }} {...props}>
@@ -14,9 +14,9 @@ export default function Selector({value, handleChange, items, labelName, ...prop
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={value}
                     displayEmpty
                     label={labelName}
+                    defaultValue={value ? value: items[0].key}
                     onChange={handleChange}
                 >
                     {items.map((item)=>{

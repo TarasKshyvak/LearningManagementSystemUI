@@ -29,13 +29,22 @@ export default class ApiService {
         return response;
     }
 
-    static async put(uri) {
-        const url = `${routes.apiUrl}${uri}`;
-        const response = await axios.put(url);
+    static async put(uri, body) {
+        const response = {
+            data: null,
+            errors: null
+        }
+        await axios.put(routes.apiUrl + uri, body, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => response.data = res.data)
+            .catch(e => response.errors = e.response.data.errors);
 
         return response;
     }
 
+    //TODO: Rewrite
     static async delete(uri) {
         const url = `${routes.apiUrl}${uri}`;
         const response = await axios.delete(url)

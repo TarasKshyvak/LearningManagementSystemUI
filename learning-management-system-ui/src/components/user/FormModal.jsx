@@ -3,9 +3,9 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
-import {Fab} from "@mui/material";
+import {Collapse, Fab} from "@mui/material";
 import ErrorAlert from "./ErrorAlert";
-import {UserErrorContext} from '../Contexts';
+
 
 const style = {
     position: 'absolute',
@@ -19,15 +19,7 @@ const style = {
     p: 4,
 };
 
-export default function FormModal({handleClose, open, children}) {
-
-    const {userErrors} = useContext(UserErrorContext);
-    const [isError, setIsError] = useState(false);
-
-    useEffect(() => {
-
-    }, [userErrors]);
-
+export default function FormModal({handleClose, open, children, errors = []}) {
     return (
         <div>
             <Modal
@@ -47,15 +39,13 @@ export default function FormModal({handleClose, open, children}) {
                             {children}
                         </Box>
                     </Fade>
-                    <Box sx={{position: 'absolute', bottom: '20px', left: '20px'}}>
-                        {userErrors.map((err) => {
+                    <Box sx={{position: 'fixed', zIndex: 999, bottom: '20px', left: '20px'}}>
+                        {errors.map((err) => {
                             return (<ErrorAlert key={err}>{err}</ErrorAlert>)
                         })}
                     </Box>
-
                 </Box>
             </Modal>
-
         </div>
     );
 }

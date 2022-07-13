@@ -9,7 +9,7 @@ import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import Selector from "./Selector";
 import UserService from "../../services/UserService";
 import {UserErrorContext} from "../Contexts";
-import {getGenderCode} from '../Helpers';
+import {convertDate, getGenderCode} from '../Helpers';
 
 const charactersOnly = /^[A-Za-z]+$/;
 
@@ -44,7 +44,7 @@ const validationSchema = Yup.object({
 });
 
 
-const UserForm = ({create}) => {
+const UserCreationForm = ({create}) => {
     const handleChange = (event) => {
         formik.setFieldValue("gender", event.target.value);
     };
@@ -65,11 +65,16 @@ const UserForm = ({create}) => {
         onSubmit: async (values) => {
             setUserErrors([]);
             setDisabledBtn(true);
+
+            values.birthday = convertDate(values.birthday);
+
             let data = JSON.stringify(values, null, 2);
+            console.log(data)
             const res = await UserService.post(data);
 
             if (res.errors) {
-                setUserErrors([res.errors]);
+                res.errors.push('Error test');
+                setUserErrors(res.errors);
             } else {
                 const model = res.data;
                 model.gender = getGenderCode(model.gender);
@@ -143,6 +148,7 @@ const UserForm = ({create}) => {
                             label="Birthday"
                             value={formik.values.birthday}
                             onChange={(newValue) => {
+
                                 formik.setFieldValue("birthday", newValue);
                             }}
                             renderInput={(params) => {
@@ -160,7 +166,7 @@ const UserForm = ({create}) => {
                         Gender:
                     </Typography>
                     <Selector handleChange={handleChange} items={selectData} labelName={'Gender'}
-                              value={formik.values.gender}/>
+                              value={2}/>
                 </Box>
 
                 <Button
@@ -177,5 +183,5 @@ const UserForm = ({create}) => {
         </Box>
     );
 };
-export default UserForm;
+export default UserCreationForm;
 
