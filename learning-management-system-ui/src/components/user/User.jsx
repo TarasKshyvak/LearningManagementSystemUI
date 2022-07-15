@@ -6,9 +6,9 @@ import Box from "@mui/material/Box";
 import FormModal from "./FormModal";
 import UserTable from "./UserTable";
 import {UserErrorContext} from "../Contexts";
-import {getGenderCode} from '../Helpers';
 import FloatingButton from "./FloatingButton";
 import Typography from "@mui/material/Typography";
+import {CircularProgress} from "@mui/material";
 
 
 function User() {
@@ -19,7 +19,7 @@ function User() {
         fetching();
     }, []);
 
-    const [fetching, userError] = useFetching(async () => {
+    const [fetching, isLoading, userError] = useFetching(async () => {
         const response = await UserService.getUsers();
         const data = response.data;
         setUsers(data);
@@ -29,6 +29,13 @@ function User() {
         setUsers([newUser, ...users]);
     }
     const removeUser = (user) => {
+        const itemIndex = users.findIndex(p => p.id === user.id);
+        const changedArr = [...users];
+        changedArr[itemIndex] = user;
+        setUsers(changedArr);
+    }
+
+    const changeUser = (user) => {
         const itemIndex = users.findIndex(p => p.id === user.id);
         const changedArr = [...users];
         changedArr[itemIndex] = user;
@@ -56,21 +63,35 @@ function User() {
                 }}>
                 </FloatingButton>
 
-                <UserErrorContext.Provider value={{userErrors, setUserErrors}}>
-                    <FormModal handleClose={handleClose} open={open} errors={userErrors}>
-                        <UserCreationForm create={addUser} handleClose={handleClose}></UserCreationForm>
-                    </FormModal>
-                </UserErrorContext.Provider>
+
+                <FormModal handleClose={handleClose} open={open} errors={userErrors}>
+                    <UserCreationForm create={addUser} setUserErrors={setUserErrors}
+                                      handleClose={handleClose}></UserCreationForm>
+                </FormModal>
 
             </Box>
 
-            <Box sx={{display: 'flex', justifyContent: 'center'}}>
-                {userError ?
-                    <div>Error - {userError}</div>
-                    :
-                    <UserTable openModalChange={handleOpen} users={users} removeUser={removeUser}></UserTable>
-                }
-            </Box>
+            {isLoading ?
+                <Box sx={{
+                    display: 'flex',
+                    height: '60vh',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <CircularProgress size={80}/>
+                </Box>
+                :
+                <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                    {userError ?
+                        <Typography sx={{fontSize: '25px', fontWeight: '900'}}>Error - {userError}</Typography>
+                        :
+                        <UserTable updateUser={changeUser} openModalChange={handleOpen} users={users}
+                                   removeUser={removeUser}></UserTable>
+                    }
+                </Box>
+            }
+
         </div>
     );
 };

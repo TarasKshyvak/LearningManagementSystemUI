@@ -16,19 +16,21 @@ import UserService from "../../services/UserService";
 import FormModal from "./FormModal";
 import UserUpdateForm from "./UserUpdateForm";
 import {getGenderCode} from "../Helpers";
-
+import DoneIcon from '@mui/icons-material/Done';
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: '#bd92c9',
         color: theme.palette.common.white,
+        fontSize: 17,
+        fontWeight: 900
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
+        fontSize: 16
     },
 }));
 
-export default function UserTable({users, removeUser}) {
+export default function UserTable({users, updateUser, removeUser}) {
     const [openDialogRemove, setOpenDialogRemove] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [openModal, setOpenModal] = useState(false);
@@ -39,10 +41,11 @@ export default function UserTable({users, removeUser}) {
     const handleOpenModal = () => {
         setOpenModal(true);
     }
+    const[updateErrors, setUpdateErrors] = useState([]);
 
     const handleSubmitRemove = () => {
         const response = UserService.delete(currentUser.id);
-        currentUser.isActive = false;
+        currentUser.isActive = !currentUser.isActive;
         if (!response.errors) {
             removeUser(currentUser);
         }
@@ -52,7 +55,7 @@ export default function UserTable({users, removeUser}) {
     const alignment = 'left';
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer sx={{borderRadius: '15px'}} component={Paper}>
             <Table sx={{minWidth: '80%'}} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -68,7 +71,7 @@ export default function UserTable({users, removeUser}) {
                 </TableHead>
                 <TableBody>
                     {users.map((row) => (
-                        <TableRow sx={{backgroundColor: row.isActive ? '#fff' : '#ffa6a6'}} key={row.id}>
+                        <TableRow sx={{backgroundColor: row.isActive ? '#fff' : '#f3bbbb'}} key={row.id}>
                             <StyledTableCell align={alignment}
                             >
                                 {row.userName}
@@ -81,33 +84,45 @@ export default function UserTable({users, removeUser}) {
                             <StyledTableCell align={alignment}>{getGenderCode(row.gender)}</StyledTableCell>
                             {/*<StyledTableCell align={alignment}>{row.isActive ? '+' : '-'}</StyledTableCell>*/}
                             <StyledTableCell align={alignment}>
-                                <Box sx={{display: 'flex', justifyContent: 'space-evenly'}}>
-                                    <Fab onClick={()=>{handleOpenModal(true);setCurrentUser(row);}} color="secondary" size={'small'} aria-label="edit">
+                                <Box sx={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                                    <Fab disabled={!row.isActive} onClick={() => {
+                                        handleOpenModal(true);
+                                        setUpdateErrors([]);
+                                        setCurrentUser(row);
+                                    }} color="secondary" size={'small'} aria-label="edit">
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
 
-                                    <Fab disabled={!row.isActive} onClick={() => {
+                                    <Fab onClick={() => {
                                         setCurrentUser(row);
                                         setOpenDialogRemove(true);
                                     }}
-                                         color="error" size={'small'}
+                                         color={row.isActive ? 'error' : 'success'} size={'small'}
                                          aria-label="remove">
+                                        {row.isActive ?
+                                            <DeleteForeverIcon sx={{fontSize: '20px', color: '#fff'}}/>
+                                            :
+                                            <DoneIcon/>
+                                        }
 
-                                        <DeleteForeverIcon sx={{fontSize: '20px', color: '#fff'}}/>
                                     </Fab>
-
                                 </Box>
                             </StyledTableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
-            <SubmitDialog open={openDialogRemove} handleSubmit={handleSubmitRemove}
-                          handleClose={() => setOpenDialogRemove(false)}></SubmitDialog>
+            <SubmitDialog open={openDialogRemove}
+                          handleSubmit={handleSubmitRemove}
+                          handleClose={() => setOpenDialogRemove(false)}
+                          text={`Do you want to change user status?`}
+            >
+            </SubmitDialog>
 
-            <FormModal handleClose={handleCloseModal} open={openModal}>
-              <UserUpdateForm user={currentUser} create={()=>''}></UserUpdateForm>
+            <FormModal handleClose={handleCloseModal} open={openModal} errors={updateErrors}>
+                <UserUpdateForm user={currentUser} update={updateUser} setErrors={setUpdateErrors}></UserUpdateForm>
             </FormModal>
+
         </TableContainer>
     );
 }

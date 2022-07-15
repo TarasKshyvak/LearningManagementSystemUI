@@ -8,9 +8,8 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import Selector from "./Selector";
 import UserService from "../../services/UserService";
-import {UserErrorContext} from "../Contexts";
 import {convertDate, getGenderCode} from '../Helpers';
-
+import LoadingButton from '@mui/lab/LoadingButton';
 const charactersOnly = /^[A-Za-z]+$/;
 
 const styledElement = {
@@ -30,8 +29,8 @@ const validationSchema = Yup.object({
         .matches(charactersOnly, "Last name should contains characters only")
         .required("Last name is required"),
     userName: Yup.string()
-        .min(5, "Username must be min 12 characters only")
-        .max(12, "Username must be max 12 characters only")
+        .min(3, "Username must be min 3 characters only")
+        .max(25, "Username must be max 25 characters only")
         .required("Username is required"),
     email: Yup.string()
         .email("Invalid email address")
@@ -44,11 +43,11 @@ const validationSchema = Yup.object({
 });
 
 
-const UserCreationForm = ({create, handleClose}) => {
+const UserCreationForm = ({create, setUserErrors, handleClose}) => {
     const handleChange = (event) => {
         formik.setFieldValue("gender", event.target.value);
     };
-    const {setUserErrors} = useContext(UserErrorContext);
+
     const [isDisabledBtn, setDisabledBtn] = useState(false);
 
     const formik = useFormik({
@@ -170,8 +169,8 @@ const UserCreationForm = ({create, handleClose}) => {
                               value={2}/>
                 </Box>
 
-                <Button
-                    disabled={isDisabledBtn}
+                <LoadingButton
+                    loading={isDisabledBtn}
                     color="primary"
                     variant="contained"
                     fullWidth
@@ -179,7 +178,7 @@ const UserCreationForm = ({create, handleClose}) => {
                     sx={{mt: '20px'}}
                 >
                     Create
-                </Button>
+                </LoadingButton>
             </form>
         </Box>
     );
