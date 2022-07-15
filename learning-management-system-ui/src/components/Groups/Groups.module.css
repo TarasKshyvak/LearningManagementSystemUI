@@ -1,7 +1,26 @@
+/*GroupList.jsx
+*****************************************************************/
+
 .groups_container {
     display: flex;
     flex-direction: column;
 }
+
+/*GroupsSort.jsx
+*****************************************************************/
+
+.groups_sort {
+    text-align: start;
+}
+
+.groups_select {
+    width: 200px;
+    margin-bottom: 20px;
+
+}
+
+/*GroupItem.jsx
+*****************************************************************/
 
 .group_item {
     max-width: 99%;
@@ -13,9 +32,32 @@
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
+Button.active_group {
+    margin-top: 5px;
+    color: green;
+    border-color: green;
+}
+
+Button.inactive_group {
+    margin-top: 5px;
+    color: lightslategrey;
+    border-color: lightslategrey;
+}
+
+Button.active_group:hover {
+    border-color: green;
+}
+
+Button.inactive_group:hover {
+    border-color: lightslategrey;
+}
+
 .group_accordion {
     border: 2px solid lightgray;
 }
+
+/*GroupAccordion.jsx
+*****************************************************************/
 
 .acc_details {
     display: flex;
