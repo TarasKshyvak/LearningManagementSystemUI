@@ -18,11 +18,10 @@ const style = {
   borderRadius: "10px",
 };
 
-const Modall = ({ handleClose, open, children }) => {
+const Modall = ({ open, children, errors = [] }) => {
   const [openErrorMessage, setOpenErrorMessage] = React.useState(false);
 
   let a = [1, 2, 3, 4];
-  const container = React.useRef(null);
   return (
     <Modal
       open={open}
@@ -31,10 +30,10 @@ const Modall = ({ handleClose, open, children }) => {
     >
       <Box width="100%" height="100%">
         <Box width="20%" maxWidth="500px" minWidth="200px" zIndex="999">
-          {a.map((text) => (
+          {errors.map((text) => (
             <ErrorMessage>{text}</ErrorMessage>
           ))}
-        </Box>
+        </Box> 
         <Box sx={style}>
           {children}
           <Grid

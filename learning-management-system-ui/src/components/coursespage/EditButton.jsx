@@ -7,10 +7,11 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { Alert, Button } from "@mui/material";
 
-const EditButton = ({course}) => {
+const EditButton = ({course, setopen}) => {
   return (
     <Box >
         <Fab
+          onClick={()=>setopen(true)}
           color="secondary"
           aria-label="edit"
           sx={{ maxHeight: 40, maxWidth: 40, m:1 }}
