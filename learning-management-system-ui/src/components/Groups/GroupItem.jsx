@@ -14,7 +14,8 @@ const GroupItem = (props) => {
     const setGroupState = async () => {      
         const response = await GroupsService.removeGroup(props.group.id);
         console.log(response);
-        setIsActive(!isActive);        
+        setIsActive(!isActive);
+        props.changeGroupState(props.group);
     }
 
     return (
@@ -28,7 +29,7 @@ const GroupItem = (props) => {
                                                             .slice(0, endDate.indexOf('T'))
                                                             .replace(/-/g, "/")}
             </div>
-            <Button 
+            <Button
                 variant="outlined" 
                 className={isActive ? classes.active_group : classes.inactive_group} 
                 onClick={setGroupState}

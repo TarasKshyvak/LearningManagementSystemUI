@@ -3,7 +3,7 @@ import GroupItem from "./GroupItem";
 import classes from './Groups.module.css';
 import GroupsSort from "./GroupsSort";
 
-const GroupsList = ({groups, title, value, sortGroups}) => {
+const GroupsList = ({groups, title, value, sortGroups, changeGroupState}) => {
     return (
         <div>
             <h1 style={{textAlign: 'center'}}>
@@ -15,7 +15,7 @@ const GroupsList = ({groups, title, value, sortGroups}) => {
             />
             <div className={classes.groups_container}>
                 {groups.map(group => 
-                    <GroupItem key={group.id} group={group}/>
+                    <GroupItem key={group.id} group={group} changeGroupState={changeGroupState}/>
                 )}
             </div>
         </div>

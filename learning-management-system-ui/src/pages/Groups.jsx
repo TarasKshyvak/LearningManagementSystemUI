@@ -23,13 +23,21 @@ const Groups = () => {
         fetchGroups();
     }, []);
 
-
     const addGroup = (newGroup) => {
         setGroups([newGroup, ...groups]);
     }
 
+    const changeGroupState = (group) => {
+        group.isActive = !group.isActive;
+        const itemIndex = groups.findIndex(g => g.id === group.id);
+        console.log(itemIndex);
+        const changedArr = [...groups];
+        changedArr[itemIndex] = group;
+        setGroups(changedArr);
+        console.log(groups);
+    }
+
     const sortGroups = (choice) => {
-        console.log(selectedSort);
         setSelectedSort(choice);
         if (choice === 'all') {
             console.log(`choice is ${choice}`);
@@ -61,6 +69,7 @@ const Groups = () => {
                 title={"List of groups"}
                 value={selectedSort}
                 sortGroups={sortGroups}
+                changeGroupState={changeGroupState}
             />
             <GroupErrorContext.Provider value={{groupErrors, setGroupErrors}}>
                 <AddGroupModal create={addGroup} errors={groupErrors}/>
