@@ -38,7 +38,7 @@ const CoursesPage = () => {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       {userError && <div>Error{userError}</div>}
-      <Box sx={{ width: "100%", maxWidth: 900, bgcolor: "background.paper" }}>
+      <Box sx={{ width: "100%", maxWidth: 700, bgcolor: "background.paper" }}>
         {courses.map((cours) => (
           <Cours cours={cours} key={cours.id} />
         ))}

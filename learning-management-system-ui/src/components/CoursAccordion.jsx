@@ -23,10 +23,10 @@ const CoursAccordion = ({ cours }) => {
         aria-controls="panel1a-content"
         id={cours.id}
       >
-        <Typography flexGrow={1} color={color}>{name}</Typography>
+        <Typography flexGrow={1} color={color} align='left'>{name}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <CorseBody cours={cours} />
+        <CorseBody cours={cours} /> 
       </AccordionDetails>
     </Accordion>
   );

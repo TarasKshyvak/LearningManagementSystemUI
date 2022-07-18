@@ -6,24 +6,32 @@ import DeleteButton from "./DeleteButton";
 import Modall from "./Modall";
 import EditCoursesModel from "./EditCourseModel";
 import DelleteModal from "./DeleteModal";
+import UpdateButton from "./UpdateButton";
 
 const CorseBody = ({ cours }) => {
   const [open, setOpen] = React.useState(false);
   const [errors, setErrors] = React.useState([]);
-  const [DelteModall, setDelteModall] = React.useState(false);
+  const [delteModall, setDelteModall] = React.useState(false);
 
   const editButton = <EditButton setopen={setOpen} course={cours} />;
-  const emptySpace = <div></div>
+  const emptySpace = <div></div>;
+  const deleteButton = <DeleteButton cours={cours} setDelteModall={setDelteModall} />;
+  const updateButton = <UpdateButton cours={cours} setDelteModall={setDelteModall} />;
 
+
+
+  let changeButton;
+  
   let button;
   if (cours.isActive) {
+    changeButton = deleteButton;
     button = editButton;
-  }else 
-  {
+  } else {
+    changeButton = updateButton;
     button = emptySpace;
   }
 
- 
+
 
   return (
     <Box>
@@ -33,7 +41,7 @@ const CorseBody = ({ cours }) => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        <Typography align="left">Description: {cours.description}</Typography>
+        <Typography noWrap={true} component='pre' align="left">Description:{cours.description}</Typography>
         <Grid container direction="row" justifyContent="space-between">
           <Box sx={{ mt: 5 }}>
             Start Date: {new Date(cours.startedAt).toLocaleDateString()}
@@ -41,7 +49,7 @@ const CorseBody = ({ cours }) => {
 
           <Grid container direction="row" justifyContent="flex-end">
             {button}
-            <DeleteButton cours={cours} setDelteModall={setDelteModall} />
+            {changeButton}
           </Grid>
         </Grid>
       </Grid>
@@ -53,8 +61,8 @@ const CorseBody = ({ cours }) => {
         ></EditCoursesModel>
       </Modall>
 
-      <Modall open={DelteModall}>
-        <DelteModall></DelteModall>
+      <Modall open={delteModall} errors={errors}> 
+        <DelleteModal setOpen={setDelteModall} cours={cours}></DelleteModal>
       </Modall>
     </Box>
   );

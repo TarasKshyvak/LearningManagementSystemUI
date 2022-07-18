@@ -35,8 +35,10 @@ export default function EditCoursesModel({ setOpen, setErrors, cours }) {
     onSubmit: async (values) => { 
       setDisabled(true); 
       setErrors([]);  
+       
+      let data = {...cours, ...values};
 
-      let data = JSON.stringify(values, null, 2);
+       data = JSON.stringify(data, null, 2);
       let response = await CoursesModule.putCoursbyID(cours.id, data);
       debugger
       if (response.errors === null) {
