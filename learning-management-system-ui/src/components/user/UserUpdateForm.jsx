@@ -8,11 +8,11 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import Selector from "./Selector";
 import UserService from "../../services/UserService";
-import {UserErrorContext} from "../Contexts";
-import {getGenderCode} from '../Helpers';
+import LoadingButton from "@mui/lab/LoadingButton";
+import {useDispatch} from "react-redux";
+import {updateUser} from '../../store/userSlice';
 
 const charactersOnly = /^[A-Za-z]+$/;
-
 const styledElement = {
     marginBottom: '20px'
 }
@@ -41,11 +41,11 @@ const validationSchema = Yup.object({
 });
 
 
-const UserUpdateForm = ({create, user}) => {
+const UserUpdateForm = ({user, handleClose, setErrors}) => {
+    const dispatch = useDispatch();
     const handleChange = (event) => {
         formik.setFieldValue("gender", event.target.value);
     };
-    // const {setUserErrors} = useContext(UserErrorContext);
     const [isDisabledBtn, setDisabledBtn] = useState(false);
 
     const formik = useFormik({
@@ -61,27 +61,36 @@ const UserUpdateForm = ({create, user}) => {
         validationSchema: validationSchema,
 
         onSubmit: async (values) => {
-            // setUserErrors([]);
+            setErrors([]);
             setDisabledBtn(true);
             values.id = user.id;
+
             let data = {...user, ...values}
+            let userInJson = JSON.stringify(user, null, 2);
             let dataJson = JSON.stringify(data, null, 2);
+
+            if(userInJson === dataJson)
+            {
+                setDisabledBtn(false);
+                return;
+            }
+
             const res = await UserService.put(user.id, data);
             console.log(dataJson)
             if (res.errors) {
-                res.errors.push('Error test');
-                // setUserErrors(res.errors);
+                setErrors(res.errors);
             } else {
                 const model = res.data;
-                // model.gender = getGenderCode(model.gender);
-                create(model);
+                user=model;
+                dispatch(updateUser({user: model}));
             }
             setDisabledBtn(false);
+            handleClose();
         },
     });
     return (
         <Box sx={{padding: '20px 20px', textAlign: 'center'}}>
-            <Typography variant={'h5'} sx={{mb: '30px', fontWeight: '900'}}>Adding new user</Typography>
+            <Typography variant={'h5'} sx={{mb: '30px', fontWeight: '900'}}>Updating user</Typography>
             <form style={{width: '380px', textAlign: 'left'}} onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
@@ -152,8 +161,8 @@ const UserUpdateForm = ({create, user}) => {
                               value={formik.values.gender}/>
                 </Box>
 
-                <Button
-                    disabled={isDisabledBtn}
+                <LoadingButton
+                    loading={isDisabledBtn}
                     color="primary"
                     variant="contained"
                     fullWidth
@@ -161,7 +170,7 @@ const UserUpdateForm = ({create, user}) => {
                     sx={{mt: '20px'}}
                 >
                     Update
-                </Button>
+                </LoadingButton>
             </form>
         </Box>
     );

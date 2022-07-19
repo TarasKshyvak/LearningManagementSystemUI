@@ -7,6 +7,7 @@ import AddButton from "../components/coursespage/AddButton";
 import Modall from "../components/coursespage/Modall";
 import AddUserModel from "../components/coursespage/AddUserModel";
 
+
 const CoursesPage = () => {
   const [courses, setUsers] = useState([]);
   useEffect(() => {
