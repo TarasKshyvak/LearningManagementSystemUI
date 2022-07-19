@@ -5,11 +5,9 @@ import UserCreationForm from './UserCreationForm';
 import Box from "@mui/material/Box";
 import FormModal from "./FormModal";
 import UserTable from "./UserTable";
-import {UserErrorContext} from "../Contexts";
 import FloatingButton from "./FloatingButton";
 import Typography from "@mui/material/Typography";
 import {CircularProgress} from "@mui/material";
-import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {addUsers} from '../../store/userSlice';
 
@@ -81,6 +79,6 @@ function User() {
 
         </div>
     );
-};
+}
 
 export default User;

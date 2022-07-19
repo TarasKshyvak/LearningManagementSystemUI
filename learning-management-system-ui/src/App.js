@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
+import Chat from './components/chat/Chat';
 
 function App() {
   return (
@@ -19,14 +20,15 @@ function App() {
           </Route>
           <Route path={routes.groups} element={<div>groups</div>}>
           </Route>
+          //For testing
+          <Route path='/chat' element={<Chat></Chat>}>
+          </Route>
           <Route path='*' element={<div>Not found</div>}>
           </Route>
           <Route path='/' element={< div > Home</div>}>
           </Route>
         </Routes>
-
       </AppContainer >
-
     </div >
   );
 }
