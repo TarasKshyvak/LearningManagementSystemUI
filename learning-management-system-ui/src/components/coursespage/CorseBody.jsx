@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import EditButton from "./EditButton";
-import { Grid, Modal, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import DeleteButton from "./DeleteButton";
 import Modall from "./Modall";
 import EditCoursesModel from "./EditCourseModel";

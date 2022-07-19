@@ -1,11 +1,6 @@
-import React, { useState, useContext } from "react";
-import ReactDOM from "react-dom";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Alert, Button, Grid, Portal, TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
+import React from "react";
 import CoursesModule from "../../services/modules/CoursesModule";
 
 export default function DelleteModal({ setOpen, cours }) {

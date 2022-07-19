@@ -10,22 +10,6 @@ import { Box } from "@mui/material";
 import InfoMessage from "./components/InfoMessage";
 
 function App() {
-  // let one = {
-  //   type: "error",
-  //   text: "asdsadsadsadsadsadsadsdaadsasdads",
-  // };
-
-  // let ones = {
-  //   type: "success",
-  //   text: "asdsadsadsadsadsadsadsdaadsasdads",
-  // };
-
-  // let ss = {
-  //   type: "info",
-  //   text: "asdsadsadsadsadsadsadsdaadsasdads",
-  // };
-
-  // let messages = [one, ones, one, ss];
   return (
     <div className="App">
       <AppContainer>

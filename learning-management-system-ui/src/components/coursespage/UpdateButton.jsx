@@ -1,7 +1,6 @@
-import React from "react";
-import Fab from "@mui/material/Fab";
 import CheckIcon from '@mui/icons-material/Check';
-import Modall from "./Modall";
+import Fab from "@mui/material/Fab";
+import React from "react";
 
 const UpdateButton = ({cours, setDelteModall}) => {
   return (
