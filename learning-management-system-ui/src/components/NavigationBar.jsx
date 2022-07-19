@@ -11,6 +11,7 @@ import Menu from './Menu';
 import {alpha} from '@mui/material/styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import InputBase from '@mui/material/InputBase';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const drawerWidth = 240;
 
@@ -122,7 +123,7 @@ const NavigationBar = () => {
                         </Search>
                     </Box>
                     <Box sx={{display: 'flex'}}>
-                        <MailIcon></MailIcon>
+                        <MailIcon/>
                     </Box>
                 </Toolbar>
             </AppBar>

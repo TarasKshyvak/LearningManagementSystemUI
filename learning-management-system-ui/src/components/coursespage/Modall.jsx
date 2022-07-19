@@ -1,9 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Grid, Stack } from "@mui/material";
+import { Grid } from "@mui/material";
 import ErrorMessage from "./ErrorMessage";
 
 const style = {
@@ -19,9 +17,7 @@ const style = {
 };
 
 const Modall = ({ open, children, errors = [] }) => {
-  const [openErrorMessage, setOpenErrorMessage] = React.useState(false);
 
-  let a = [1, 2, 3, 4];
   return (
     <Modal
       open={open}

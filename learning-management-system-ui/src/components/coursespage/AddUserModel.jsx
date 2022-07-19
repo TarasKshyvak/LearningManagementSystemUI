@@ -36,7 +36,7 @@ export default function AddUserModel({ handleClose, setErrors }) {
     onSubmit: async (values) => {
       setDisabled(true);
       setErrors([]);
-      
+      console.log(values);
       let data = JSON.stringify(values, null, 2);
       let response = await CoursesModule.CreateCours(data);
       if (response.errors === null) {
