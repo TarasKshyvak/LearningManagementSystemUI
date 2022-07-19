@@ -9,11 +9,14 @@ import {UserErrorContext} from "../Contexts";
 import FloatingButton from "./FloatingButton";
 import Typography from "@mui/material/Typography";
 import {CircularProgress} from "@mui/material";
-
+import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {addUsers} from '../../store/userSlice';
 
 function User() {
-    const [users, setUsers] = useState([]);
+
     const [userErrors, setUserErrors] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetching();
@@ -22,25 +25,10 @@ function User() {
     const [fetching, isLoading, userError] = useFetching(async () => {
         const response = await UserService.getUsers();
         const data = response.data;
-        setUsers(data);
+        console.log(data)
+        dispatch(addUsers(data));
     });
 
-    const addUser = (newUser) => {
-        setUsers([newUser, ...users]);
-    }
-    const removeUser = (user) => {
-        const itemIndex = users.findIndex(p => p.id === user.id);
-        const changedArr = [...users];
-        changedArr[itemIndex] = user;
-        setUsers(changedArr);
-    }
-
-    const changeUser = (user) => {
-        const itemIndex = users.findIndex(p => p.id === user.id);
-        const changedArr = [...users];
-        changedArr[itemIndex] = user;
-        setUsers(changedArr);
-    }
 
     ///Modal
     const [open, setOpen] = useState(false);
@@ -65,7 +53,7 @@ function User() {
 
 
                 <FormModal handleClose={handleClose} open={open} errors={userErrors}>
-                    <UserCreationForm create={addUser} setUserErrors={setUserErrors}
+                    <UserCreationForm setUserErrors={setUserErrors}
                                       handleClose={handleClose}></UserCreationForm>
                 </FormModal>
 
@@ -86,8 +74,7 @@ function User() {
                     {userError ?
                         <Typography sx={{fontSize: '25px', fontWeight: '900'}}>Error - {userError}</Typography>
                         :
-                        <UserTable updateUser={changeUser} openModalChange={handleOpen} users={users}
-                                   removeUser={removeUser}></UserTable>
+                        <UserTable openModalChange={handleOpen}></UserTable>
                     }
                 </Box>
             }

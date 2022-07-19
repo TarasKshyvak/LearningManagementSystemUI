@@ -10,6 +10,9 @@ import Selector from "./Selector";
 import UserService from "../../services/UserService";
 import {convertDate, getGenderCode} from '../Helpers';
 import LoadingButton from '@mui/lab/LoadingButton';
+import {useDispatch} from "react-redux";
+import {addUser} from '../../store/userSlice';
+
 const charactersOnly = /^[A-Za-z]+$/;
 
 const styledElement = {
@@ -43,10 +46,11 @@ const validationSchema = Yup.object({
 });
 
 
-const UserCreationForm = ({create, setUserErrors, handleClose}) => {
+const UserCreationForm = ({setUserErrors, handleClose}) => {
     const handleChange = (event) => {
         formik.setFieldValue("gender", event.target.value);
     };
+    const dispatch = useDispatch();
 
     const [isDisabledBtn, setDisabledBtn] = useState(false);
 
@@ -76,7 +80,7 @@ const UserCreationForm = ({create, setUserErrors, handleClose}) => {
                 setUserErrors(res.errors);
             } else {
                 const model = res.data;
-                create(model);
+                dispatch(addUser({user: model}));
                 handleClose();
             }
             setDisabledBtn(false);

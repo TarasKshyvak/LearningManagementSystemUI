@@ -11,6 +11,7 @@ import Modall from "../components/coursespage/Modall";
 import AddUserModel from "../components/coursespage/AddUserModel";
 import BasicDatePicker from "../components/coursespage/DatePikecker";
 
+
 const CoursesPage = () => {
   const [courses, setUsers] = useState([]);
   useEffect(() => {

@@ -17,6 +17,10 @@ import FormModal from "./FormModal";
 import UserUpdateForm from "./UserUpdateForm";
 import {getGenderCode} from "../Helpers";
 import DoneIcon from '@mui/icons-material/Done';
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from '../../store/userSlice';
+
+
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -30,11 +34,11 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
     },
 }));
 
-export default function UserTable({users, updateUser, removeUser}) {
+export default function UserTable() {
     const [openDialogRemove, setOpenDialogRemove] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [openModal, setOpenModal] = useState(false);
-
+    const users = useSelector(state => state.users.users);
     const handleCloseModal = () => {
         setOpenModal(false);
     }
@@ -42,12 +46,20 @@ export default function UserTable({users, updateUser, removeUser}) {
         setOpenModal(true);
     }
     const[updateErrors, setUpdateErrors] = useState([]);
+    const dispatch = useDispatch();
+
+
 
     const handleSubmitRemove = () => {
+        console.log(currentUser);
         const response = UserService.delete(currentUser.id);
-        currentUser.isActive = !currentUser.isActive;
+        const user = {...currentUser};
+
+        user.isActive = !user.isActive;
+        setCurrentUser(user);
+
         if (!response.errors) {
-            removeUser(currentUser);
+            dispatch(updateUser({user: user}));
         }
         setOpenDialogRemove(false);
     }
@@ -104,8 +116,8 @@ export default function UserTable({users, updateUser, removeUser}) {
                                             :
                                             <DoneIcon/>
                                         }
-
                                     </Fab>
+
                                 </Box>
                             </StyledTableCell>
                         </TableRow>
@@ -120,7 +132,7 @@ export default function UserTable({users, updateUser, removeUser}) {
             </SubmitDialog>
 
             <FormModal handleClose={handleCloseModal} open={openModal} errors={updateErrors}>
-                <UserUpdateForm user={currentUser} update={updateUser} setErrors={setUpdateErrors}></UserUpdateForm>
+                <UserUpdateForm handleClose={handleCloseModal} user={currentUser} setErrors={setUpdateErrors}></UserUpdateForm>
             </FormModal>
 
         </TableContainer>
