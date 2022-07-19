@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
+import {Chat} from "@mui/icons-material";
 
 function App() {
   return (
