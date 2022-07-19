@@ -12,29 +12,29 @@ export default class CoursesModule {
 
      static async CreateCours(body)
      {
-        let cours = ApiService.post(routes.courses, body);
+        let cours = await ApiService.post(routes.courses, body);
 
-        return (await cours).status;
+        return await cours;
      }
 
      static async getCoursbyID(id)
      {
-        let Cours = ApiService.get(`${routes.courses}/${id}`);
+        let Cours = await ApiService.get(`${routes.courses}/${id}`);
 
-        return Cours;
+        return await Cours;
      }
 
      static async putCoursbyID(id, body)
      {
-        let Cours = ApiService.put(`${routes.courses}/${id}`, body);
+        let Cours = await ApiService.put(`${routes.courses}/${id}`, body);
 
-        return (await Cours).status;
+        return await Cours;
      }
 
      static async deleteCoursbyID(id)
      {
-        let Cours = ApiService.delete(`${routes.courses}/${id}`);
+        let Cours = await ApiService.delete(`${routes.courses}/${id}`);
 
-        return (await Cours).status;
+        return await Cours; 
      }
 }

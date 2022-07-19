@@ -11,6 +11,7 @@ import Menu from './Menu';
 import {alpha} from '@mui/material/styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import InputBase from '@mui/material/InputBase';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const drawerWidth = 240;
 
@@ -107,13 +108,13 @@ const NavigationBar = () => {
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{display: {xs: 'none', sm: 'block'}}}
+                            sx={{display: {xs: 'none', sm: 'block', marginLeft: 15, marginRight: 15}}}
                         >
                             LMS
                         </Typography>
                         <Search>
                             <SearchIconWrapper>
-
+                                {/* Todo icon upd search layout  */}
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
@@ -122,7 +123,7 @@ const NavigationBar = () => {
                         </Search>
                     </Box>
                     <Box sx={{display: 'flex'}}>
-                        <MailIcon></MailIcon>
+                        <MailIcon/>
                     </Box>
                 </Toolbar>
             </AppBar>

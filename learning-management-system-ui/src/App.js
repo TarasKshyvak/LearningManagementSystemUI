@@ -5,12 +5,16 @@ import { Route, Routes } from 'react-router-dom';
 import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
-import Chat from './components/chat/Chat';
 
 function App() {
   return (
     <div className="App" >
       <AppContainer>
+        {/* <Box position="fixed" zIndex={999}>
+            {messages.map((message) => (
+              <InfoMessage message={message}>{}</InfoMessage>
+            ))}
+          </Box> */}
         <Routes>
           <Route path={routes.home} element={<div>Home</div>}>
           </Route>
