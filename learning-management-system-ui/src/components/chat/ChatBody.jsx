@@ -7,17 +7,15 @@ import {Button, TextField} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import {useDispatch, useSelector} from "react-redux";
 import {addMessage, addMessages} from "../../store/chatSlice";
-
-const chatMessages =[{sender: 'harik', text: 'hello'},
-    {sender: 'sirius', text: 'I am sirius'},
-    {sender: 'henry', text: 'Nice weather'}]
+import ChatService from "../../services/ChatService";
 
 
 const ChatBody = () => {
-    const [newMsg, setNewMsg] = useState();
+    const [newMsg, setNewMsg] = useState('');
     const messages = useSelector(state=> state.chat.messages);
     const setMessages = useDispatch();
-    setMessages(addMessages({messages:chatMessages}));
+
+
     //ScrollToBottom
     const bottom = useRef(null)
     const scrollToBottom = () => {
@@ -25,7 +23,6 @@ const ChatBody = () => {
     }
     useEffect(() => {
         scrollToBottom()
-        console.log(messages)
     }, [messages]);
     //ScrollToBottom
 
@@ -74,7 +71,7 @@ const ChatBody = () => {
                 { messages &&
                     messages.map((message, index) => {
                         const align = index % 2 === 0 ? 'flex-end' : 'flex-start';
-                        return (<Box key={message.sender} sx={{alignSelf: align}}>
+                        return (<Box key={index+message.sender} sx={{alignSelf: align}}>
                             <ChatMessage message = {message}>
                             </ChatMessage>
                         </Box>)
@@ -102,9 +99,8 @@ const ChatBody = () => {
                 <Button
                     type='submit'
                     onClick={() => {
-                        console.log(messages)
                         if (newMsg) {
-                            const msg = {text: newMsg, sender: 'Me', date: new Date()};
+                            const msg = {text: newMsg, sender: 'Me'};
                             setMessages(addMessage({message: msg}));
                             setNewMsg('');
                         }

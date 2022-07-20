@@ -3,5 +3,7 @@ export const routes = {
     home: '/home',
     users: '/users',
     courses: '/courses',
-    groups: '/Groups'
+    groups: '/Groups',
+    chatApi: 'https://localhost:7285/chat',
+    chat: '/chat'
 };
