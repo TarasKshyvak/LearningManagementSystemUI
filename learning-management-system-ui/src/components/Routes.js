@@ -3,5 +3,6 @@ export const routes = {
     home: '/home',
     users: '/users',
     courses: '/courses',
-    groups: '/Groups'
+    groups: '/Groups',
+    notificationHub:'https://localhost:7285/notification'
 };
