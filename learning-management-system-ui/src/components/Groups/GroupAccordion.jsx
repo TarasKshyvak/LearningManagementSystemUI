@@ -13,10 +13,11 @@ const GroupAccordion = (props) => {
     }
 
     return (
-        <div>
+        <div style={{
+            marginTop: '20px'
+        }}>
             <Accordion
                 sx={{
-                    marginTop: '10px',
                     border: '2px solid lightgrey',
                     boxShadow: 'none'
                 }}
