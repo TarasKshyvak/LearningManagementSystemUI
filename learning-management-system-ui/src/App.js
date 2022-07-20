@@ -5,6 +5,8 @@ import { Route, Routes } from 'react-router-dom';
 import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
+import Groups from './pages/Groups';
+import Home from './pages/Home';
 import {Chat} from "@mui/icons-material";
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
             ))}
           </Box> */}
         <Routes>
-          <Route path={routes.home} element={<div>Home</div>}>
+          <Route path={routes.home} element={<Home/>}>
           </Route>
           <Route path={routes.users} element={<User></User>}>
           </Route>
@@ -30,7 +32,7 @@ function App() {
           </Route>
           <Route path='*' element={<div>Not found</div>}>
           </Route>
-          <Route path='/' element={< div > Home</div>}>
+          <Route path='/' element={<Home/>}>
           </Route>
         </Routes>
       </AppContainer >
