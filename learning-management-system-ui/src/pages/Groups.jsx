@@ -1,3 +1,4 @@
+import { Box, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { GroupErrorContext, StudentsWithoutGroupsContext } from '../components/Contexts';
@@ -15,7 +16,7 @@ const Groups = () => {
     
     const [sortedGroups, setSortedGroups] = useState([]);
 
-    const [fetchGroups, groupError] = useFetching(async () => {
+    const [fetchGroups, isLoading, groupError] = useFetching(async () => {
         const response = await GroupsService.getGroups();
         setGroups(response.data);
         setSortedGroups(response.data);
@@ -71,6 +72,18 @@ const Groups = () => {
                     changeGroupState={changeGroupState}
                 />
             </StudentsWithoutGroupsContext.Provider>
+            {isLoading &&
+                <Box sx={{
+                    display: 'flex',
+                    height: '60vh',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <CircularProgress size={80}/>
+                </Box>
+            }
+            
             <GroupErrorContext.Provider value={{groupErrors, setGroupErrors}}>
                 <AddGroupModal create={addGroup} errors={groupErrors}/>
             </GroupErrorContext.Provider>
