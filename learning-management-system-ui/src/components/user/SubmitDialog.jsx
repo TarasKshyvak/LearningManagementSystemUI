@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-export default function SubmitDialog({open, handleClose, handleSubmit}) {
+export default function SubmitDialog({open, handleClose, handleSubmit, text}) {
 
     return (
         <div>
@@ -15,7 +15,7 @@ export default function SubmitDialog({open, handleClose, handleSubmit}) {
                 aria-labelledby="responsive-dialog-title"
             >
                 <DialogTitle id="responsive-dialog-title">
-                    {"Do you want to make the user inactive?"}
+                    {text}
                 </DialogTitle>
                 <DialogActions>
                     <Button autoFocus variant="outlined" color="error" onClick={handleClose}>

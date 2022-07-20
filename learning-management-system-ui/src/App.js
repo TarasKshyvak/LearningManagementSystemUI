@@ -9,14 +9,16 @@ import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 import Groups from './pages/Groups';
 import NotifHub from './services/NotificationHub';
+import Home from './pages/Home';
+import {Chat} from "@mui/icons-material";
 
- export default function  App() {
+function  App() {
   // console.log(connection.connectionId)
   // console.log(NotifHub(setMessages));
   const[messages, setMessages] = React.useState([]);
   console.log(messages);
   return (
-    <div className="App">
+    <div className="App" >
       <AppContainer>
         <Box>
         
@@ -25,23 +27,26 @@ import NotifHub from './services/NotificationHub';
               <InfoMessage message={message}>{}</InfoMessage>
             ))}
           </Box> */}
-          <Routes>
-            <Route path={routes.home} element={<div>Home</div>}></Route>
-            <Route path={routes.users} element={<User />}></Route>
-            <Route
-              path={routes.courses}
-              element={
-                <div>
-                  <CoursesPage />
-                </div>
-              }
-            ></Route>
-            <Route path={routes.groups} element={<Groups/>}></Route>
-            <Route path="*" element={<div>Not found</div>}></Route>
-            <Route path="/" element={<div> Home</div>}></Route>
-          </Routes>
-        </Box>
-      </AppContainer>
-    </div>
+        <Routes>
+          <Route path={routes.home} element={<Home/>}>
+          </Route>
+          <Route path={routes.users} element={<User></User>}>
+          </Route>
+          <Route path={routes.courses} element={<div><CoursesPage/></div>}>
+          </Route>
+          <Route path={routes.groups} element={<div>groups</div>}>
+          </Route>
+          //For testing
+          <Route path='/chat' element={<Chat></Chat>}>
+          </Route>
+          <Route path='*' element={<div>Not found</div>}>
+          </Route>
+          <Route path='/' element={<Home/>}>
+          </Route>
+        </Routes>
+      </AppContainer >
+    </div >
   );
 }
+
+export default App;
