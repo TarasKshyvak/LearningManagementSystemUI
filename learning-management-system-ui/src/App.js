@@ -25,7 +25,7 @@ function App() {
           </Route>
           <Route path={routes.courses} element={<div><CoursesPage/></div>}>
           </Route>
-          <Route path={routes.groups} element={<div>groups</div>}>
+          <Route path={routes.groups} element={<Groups/>}>
           </Route>
           //For testing
           <Route path='/chat' element={<Chat></Chat>}>
