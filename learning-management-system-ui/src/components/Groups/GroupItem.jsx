@@ -13,7 +13,6 @@ const GroupItem = (props) => {
 
     const setGroupState = async () => {      
         const response = await GroupsService.removeGroup(props.group.id);
-        console.log(response);
         setIsActive(!isActive);
         props.changeGroupState(props.group);
     }
@@ -39,7 +38,7 @@ const GroupItem = (props) => {
                  : <div>Education finished</div>
                 }
             </Button>
-            <GroupAccordion className={classes.group_accordion} students={props.group.students}/>
+            <GroupAccordion className={classes.group_accordion} students={props.group.students} groupId={props.group.id}/>
         </div>
     );
 }

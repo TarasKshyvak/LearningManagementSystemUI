@@ -6,13 +6,14 @@ import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 import Groups from './pages/Groups';
+import Home from './pages/Home';
 
 function App() {
   return (
     <div className="App" >
       <AppContainer>
         <Routes>
-          <Route path={routes.home} element={<div>Home</div>}>
+          <Route path={routes.home} element={<Home/>}>
           </Route>
           <Route path={routes.users} element={<User/>}>
           </Route>
@@ -22,7 +23,7 @@ function App() {
           </Route>
           <Route path='*' element={<div>Not found</div>}>
           </Route>
-          <Route path='/' element={< div > Home</div>}>
+          <Route path='/' element={<Home/>}>
           </Route>
         </Routes>
       </AppContainer >

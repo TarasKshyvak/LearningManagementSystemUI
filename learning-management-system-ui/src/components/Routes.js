@@ -3,5 +3,7 @@ export const routes = {
     home: '/home',
     users: '/users',
     courses: '/courses',
-    groups: '/Groups'
+    groups: '/Groups',
+    students: '/Students',
+    management: '/Management'
 };

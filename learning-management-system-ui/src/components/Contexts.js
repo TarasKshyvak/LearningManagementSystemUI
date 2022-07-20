@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
-export const UserErrorContext = React.createContext(null);
-export const GroupErrorContext = React.createContext(null);
+export const UserErrorContext = createContext(null);
+export const GroupErrorContext = createContext(null);
+export const StudentsWithoutGroupsContext = createContext(null);
