@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseIcon from '@mui/icons-material/Close';
-import {Collapse, Fab} from "@mui/material";
+import {Fab} from "@mui/material";
 import ErrorAlert from "./ErrorAlert";
-
 
 const style = {
     position: 'absolute',

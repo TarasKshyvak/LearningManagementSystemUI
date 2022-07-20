@@ -7,19 +7,28 @@ import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 import Groups from './pages/Groups';
 import Home from './pages/Home';
+import {Chat} from "@mui/icons-material";
 
 function App() {
   return (
     <div className="App" >
       <AppContainer>
+        {/* <Box position="fixed" zIndex={999}>
+            {messages.map((message) => (
+              <InfoMessage message={message}>{}</InfoMessage>
+            ))}
+          </Box> */}
         <Routes>
           <Route path={routes.home} element={<Home/>}>
           </Route>
-          <Route path={routes.users} element={<User/>}>
+          <Route path={routes.users} element={<User></User>}>
           </Route>
           <Route path={routes.courses} element={<div><CoursesPage/></div>}>
           </Route>
-          <Route path={routes.groups} element={<Groups/>}>
+          <Route path={routes.groups} element={<div>groups</div>}>
+          </Route>
+          //For testing
+          <Route path='/chat' element={<Chat></Chat>}>
           </Route>
           <Route path='*' element={<div>Not found</div>}>
           </Route>

@@ -1,12 +1,5 @@
+import { Button } from "@mui/material";
 import React from "react";
-import ReactDOM from "react-dom";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Button, Grid, TextField } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Box } from "@mui/system";
-import CoursesModule from "../../services/modules/CoursesModule";
 
 
 const DeleteCourseModel = () => {
