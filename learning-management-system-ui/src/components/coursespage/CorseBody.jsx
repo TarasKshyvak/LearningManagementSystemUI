@@ -3,28 +3,67 @@ import Box from "@mui/material/Box";
 import EditButton from "./EditButton";
 import { Grid, Typography } from "@mui/material";
 import DeleteButton from "./DeleteButton";
+import Modall from "./Modall";
+import EditCoursesModel from "./EditCourseModel";
+import DelleteModal from "./DeleteModal";
+import UpdateButton from "./UpdateButton";
 
 const CorseBody = ({ cours }) => {
+  const [open, setOpen] = React.useState(false);
+  const [errors, setErrors] = React.useState([]);
+  const [delteModall, setDelteModall] = React.useState(false);
+
+  const editButton = <EditButton setopen={setOpen} course={cours} />;
+  const emptySpace = <div></div>;
+  const deleteButton = <DeleteButton cours={cours} setDelteModall={setDelteModall} />;
+  const updateButton = <UpdateButton cours={cours} setDelteModall={setDelteModall} />;
+
+
+
+  let changeButton;
+  
+  let button;
+  if (cours.isActive) {
+    changeButton = deleteButton;
+    button = editButton;
+  } else {
+    changeButton = updateButton;
+    button = emptySpace;
+  }
+
+
+
   return (
-    <Box >
+    <Box>
       <Grid
         container
         direction="column"
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        <Typography align="left">
-          Description: {cours.description}
-        </Typography>
+        <Typography noWrap={true} component='pre' align="left">Description:{cours.description}</Typography>
         <Grid container direction="row" justifyContent="space-between">
-          <Box sx={{ mt: 5 }}>Start Date: {new Date( cours.startedAt).toLocaleDateString()}</Box>
+          <Box sx={{ mt: 5 }}>
+            Start Date: {new Date(cours.startedAt).toLocaleDateString()}
+          </Box>
 
           <Grid container direction="row" justifyContent="flex-end">
-            <EditButton course={cours} />
-            <DeleteButton />
+            {button}
+            {changeButton}
           </Grid>
         </Grid>
       </Grid>
+      <Modall open={open} errors={errors}>
+        <EditCoursesModel
+          setOpen={setOpen}
+          setErrors={setErrors}
+          cours={cours}
+        ></EditCoursesModel>
+      </Modall>
+
+      <Modall open={delteModall} errors={errors}> 
+        <DelleteModal setOpen={setDelteModall} cours={cours}></DelleteModal>
+      </Modall>
     </Box>
   );
 };

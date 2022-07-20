@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import {Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
+import { Box } from "@mui/system";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Box } from "@mui/system";
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import * as yup from "yup";
 import CoursesModule from "../../services/modules/CoursesModule";
 
 const validationSchema = yup.object({
@@ -21,29 +21,30 @@ const validationSchema = yup.object({
     .required("Course Description is required"),
 });
 
-export default function AddUserModel({ handleClose, setErrors }) {
+export default function EditCoursesModel({ setOpen, setErrors, cours }) {
   const [isDisabled, setDisabled] = useState(false);
 
-  
   const formik = useFormik({
     initialValues: {
-      startedAt: new Date(),
-      name: "",
-      description: "",
+      startedAt: cours.startedAt,
+      name: cours.name,
+      description: cours.description,
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      setDisabled(true);
-      setErrors([]);
-      console.log(values);
-      let data = JSON.stringify(values, null, 2);
-      let response = await CoursesModule.CreateCours(data);
+    onSubmit: async (values) => { 
+      setDisabled(true); 
+      setErrors([]);  
+       
+      let data = {...cours, ...values};
+
+       data = JSON.stringify(data, null, 2);
+      let response = await CoursesModule.putCoursbyID(cours.id, data);
+      debugger
       if (response.errors === null) {
-        handleClose(true);
+        setOpen(false);
       } else {
         setErrors(response.errors);
-      } 
-
+      }
       setDisabled(false);
       console.log(response);
     },
@@ -51,7 +52,7 @@ export default function AddUserModel({ handleClose, setErrors }) {
 
   return (
     <Box width="100%" height="100%">
-      <h1>Add New Cours</h1>
+      <h1>Edit Cours</h1>
       <form onSubmit={formik.handleSubmit}>
         <TextField
           fullWidth
@@ -111,7 +112,7 @@ export default function AddUserModel({ handleClose, setErrors }) {
         >
           <Button
             disabled={isDisabled}
-            onClick={handleClose}
+            onClick={()=>setOpen(false)}
             color="primary"
             variant="contained"
           >

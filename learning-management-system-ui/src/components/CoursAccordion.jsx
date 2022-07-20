@@ -8,7 +8,14 @@ import AddButton from "./coursespage/AddButton";
 import EditButton from "./coursespage/EditButton";
 import CorseBody from "./coursespage/CorseBody";
 
+
+
 const CoursAccordion = ({ cours }) => {
+
+  let color = '';
+  let name = cours.name;
+  if(!cours.isActive){name = cours.name + '(is not Active)'; color = 'error'}
+
   return (
     <Accordion sx={{ m: 1 }}>
       <AccordionSummary
@@ -16,10 +23,10 @@ const CoursAccordion = ({ cours }) => {
         aria-controls="panel1a-content"
         id={cours.id}
       >
-        <Typography flexGrow={1}>{cours.name}</Typography>
+        <Typography flexGrow={1} color={color} align='left'>{name}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <CorseBody cours={cours} />
+        <CorseBody cours={cours} /> 
       </AccordionDetails>
     </Accordion>
   );
