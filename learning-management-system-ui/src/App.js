@@ -5,7 +5,8 @@ import { Route, Routes } from 'react-router-dom';
 import { routes } from './components/Routes';
 import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
-import {Chat} from "@mui/icons-material";
+import Groups from "./pages/Groups";
+import ChatWindow from "./components/chat/ChatWindow";
 
 function App() {
   return (
@@ -23,10 +24,10 @@ function App() {
           </Route>
           <Route path={routes.courses} element={<div><CoursesPage/></div>}>
           </Route>
-          <Route path={routes.groups} element={<div>groups</div>}>
+          <Route path={routes.groups} element={<Groups></Groups>}>
           </Route>
           //For testing
-          <Route path='/chat' element={<Chat></Chat>}>
+          <Route path='/chat' element={<ChatWindow></ChatWindow>}>
           </Route>
           <Route path='*' element={<div>Not found</div>}>
           </Route>
