@@ -30,12 +30,15 @@ const Groups = () => {
         setSortedGroups([...groups, ...response.data.data]);
         const totalCount = response.data.totalRecords;
         setTotalPages(getPageCount(totalCount, pageSize));
-        console.log(response);
     });
 
     useObserver(lastElement, pageNumber < totalPages, isLoading, () => {
         setPageNumber(pageNumber + 1);
     });
+
+    useEffect(() => {
+        fetchGroups(pageNumber, pageSize);
+    }, [pageNumber, pageSize]);
 
     const [fetchUsers, userError] = useFetching(async () => {
         const response = await StudentsService.getStudentsWithoutGroups();
@@ -44,12 +47,11 @@ const Groups = () => {
     });
 
     useEffect(() => {
-        fetchGroups(pageNumber, pageSize);
         fetchUsers();
-    }, [pageNumber, pageSize]);
+    }, []);
 
     const addGroup = (newGroup) => {
-        setGroups([newGroup, ...sortedGroups]);
+        setSortedGroups([newGroup, ...sortedGroups]);
     }
 
     const changeGroupState = (group) => {
