@@ -47,7 +47,7 @@ const AddStudents = (props) => {
                 }}
                 renderInput={(params) => <TextField 
                                             {...params}
-                                            placeholder="Start typing students' username"
+                                            placeholder="Start typing students' name"
                                          />}
                 value={values}
                 onChange={(event, newValue) => setValues(newValue, ...values)}
