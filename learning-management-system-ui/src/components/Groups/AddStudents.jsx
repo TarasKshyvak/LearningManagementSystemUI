@@ -47,22 +47,22 @@ const AddStudents = (props) => {
                 }}
                 renderInput={(params) => <TextField 
                                             {...params}
-                                            placeholder="Start typing students' username"
+                                            placeholder="Start typing students' name"
                                          />}
                 value={values}
                 onChange={(event, newValue) => setValues(newValue, ...values)}
             />
             <Button
-                variant="outlined"
+                variant="contained"
                 style={{
                     height: '55px',
                     width: '10%',
                     marginLeft: '8px',
-                    fontSize: '16px'
+                    fontSize: '17px'
                 }}
                 type="submit"
             >
-                Add students
+                Add
             </Button>
         </form>
     );

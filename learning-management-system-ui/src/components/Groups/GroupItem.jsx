@@ -19,9 +19,16 @@ const GroupItem = (props) => {
 
     return (
         <div className={classes.group_item}>
-            <h3>{props.group.name}</h3>
+            <h3 style={{
+                textAlign: "left"
+            }}>
+                {props.group.name}
+            </h3>
             <hr/>
-            <div>
+            <div style={{
+                textAlign: "left",
+                marginTop: '15px'
+            }}>
                 Education period: {startDate
                                     .slice(0, startDate.indexOf('T'))
                                     .replace(/-/g, "/")} - {endDate

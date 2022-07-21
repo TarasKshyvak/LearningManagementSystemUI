@@ -1,11 +1,15 @@
+import { Box, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import { useEffect } from 'react';
 import { GroupErrorContext, StudentsWithoutGroupsContext } from '../components/Contexts';
 import AddGroupModal from '../components/Groups/AddGroupModal';
 import GroupsList from '../components/Groups/GroupsList';
 import { useFetching } from '../hooks/useFetching';
+import { useObserver } from '../hooks/useObserver';
 import GroupsService from '../services/GroupsService';
 import StudentsService from '../services/StudentsService';
+import { getPageCount } from '../utils/pages';
 
 const Groups = () => {
     const [groups, setGroups] = useState([]);
@@ -15,11 +19,26 @@ const Groups = () => {
     
     const [sortedGroups, setSortedGroups] = useState([]);
 
-    const [fetchGroups, groupError] = useFetching(async () => {
-        const response = await GroupsService.getGroups();
-        setGroups(response.data);
-        setSortedGroups(response.data);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(4);
+    const [totalPages, setTotalPages] = useState(0);
+    const lastElement = useRef();
+
+    const [fetchGroups, isLoading, groupError] = useFetching(async (pageNumber, pageSize) => {
+        const response = await GroupsService.getGroups(pageNumber, pageSize);
+        setGroups([...groups, ...response.data.data]);
+        setSortedGroups([...groups, ...response.data.data]);
+        const totalCount = response.data.totalRecords;
+        setTotalPages(getPageCount(totalCount, pageSize));
     });
+
+    useObserver(lastElement, pageNumber < totalPages, isLoading, () => {
+        setPageNumber(pageNumber + 1);
+    });
+
+    useEffect(() => {
+        fetchGroups(pageNumber, pageSize);
+    }, [pageNumber, pageSize]);
 
     const [fetchUsers, userError] = useFetching(async () => {
         const response = await StudentsService.getStudentsWithoutGroups();
@@ -28,12 +47,11 @@ const Groups = () => {
     });
 
     useEffect(() => {
-        fetchGroups();
         fetchUsers();
     }, []);
 
     const addGroup = (newGroup) => {
-        setGroups([newGroup, ...groups]);
+        setSortedGroups([newGroup, ...sortedGroups]);
     }
 
     const changeGroupState = (group) => {
@@ -70,7 +88,19 @@ const Groups = () => {
                     sortGroups={sortGroups}
                     changeGroupState={changeGroupState}
                 />
+                <div ref={lastElement} style={{height: 1}}/>
             </StudentsWithoutGroupsContext.Provider>
+            {isLoading &&
+                <Box sx={{
+                    display: 'flex',
+                    height: '60vh',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <CircularProgress size={80}/>
+                </Box>
+            }            
             <GroupErrorContext.Provider value={{groupErrors, setGroupErrors}}>
                 <AddGroupModal create={addGroup} errors={groupErrors}/>
             </GroupErrorContext.Provider>
