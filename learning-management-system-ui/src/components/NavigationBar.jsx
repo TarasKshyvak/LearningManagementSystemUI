@@ -12,6 +12,8 @@ import {alpha} from '@mui/material/styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import InputBase from '@mui/material/InputBase';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import {routes} from "./Routes";
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -122,9 +124,11 @@ const NavigationBar = () => {
                             />
                         </Search>
                     </Box>
-                    <Box sx={{display: 'flex'}}>
-                        <MailIcon/>
-                    </Box>
+                    <Link style={{textDecoration: 'none', color: '#000'}} to={routes.chat}>
+                        <Box sx={{display: 'flex'}}>
+                            <MailIcon/>
+                        </Box>
+                    </Link>
                 </Toolbar>
             </AppBar>
             <Menu handleDrawerClose={handleDrawerClose} open={open} theme={theme}></Menu>

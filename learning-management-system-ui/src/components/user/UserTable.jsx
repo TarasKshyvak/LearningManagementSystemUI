@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {styled} from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,7 +21,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from '../../store/userSlice';
 
 
-
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#bd92c9',
@@ -38,7 +37,9 @@ export default function UserTable() {
     const [openDialogRemove, setOpenDialogRemove] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+
     const users = useSelector(state => state.users.users);
+
     const handleCloseModal = () => {
         setOpenModal(false);
     }
@@ -46,12 +47,11 @@ export default function UserTable() {
         setOpenModal(true);
     }
     const[updateErrors, setUpdateErrors] = useState([]);
+
     const dispatch = useDispatch();
 
 
-
     const handleSubmitRemove = () => {
-        console.log(currentUser);
         const response = UserService.delete(currentUser.id);
         const user = {...currentUser};
 

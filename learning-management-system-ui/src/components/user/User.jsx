@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import {CircularProgress} from "@mui/material";
 import {useDispatch} from 'react-redux';
 import {addUsers} from '../../store/userSlice';
+import ChatService from "../../services/ChatService";
 
 function User() {
 
@@ -23,7 +24,6 @@ function User() {
     const [fetching, isLoading, userError] = useFetching(async () => {
         const response = await UserService.getUsers();
         const data = response.data;
-        console.log(data)
         dispatch(addUsers(data));
     });
 

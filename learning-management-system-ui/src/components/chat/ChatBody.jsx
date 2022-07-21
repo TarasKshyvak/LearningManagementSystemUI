@@ -6,15 +6,14 @@ import Divider from "@mui/material/Divider";
 import {Button, TextField} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessage, addMessages} from "../../store/chatSlice";
+import {addMessage} from "../../store/chatSlice";
 import ChatService from "../../services/ChatService";
 
 
 const ChatBody = () => {
     const [newMsg, setNewMsg] = useState('');
-    const messages = useSelector(state=> state.chat.messages);
-    const setMessages = useDispatch();
-
+    const messages = useSelector(state => state.chat.messages);
+    const dispatch = useDispatch();
 
     //ScrollToBottom
     const bottom = useRef(null)
@@ -64,15 +63,15 @@ const ChatBody = () => {
                     // justifyContent: 'flex-end',
                     overflow: "hidden",
                     overflowY: "scroll",
-                    '& > *:first-child':{
+                    '& > *:first-of-type': {
                         marginTop: 'auto !important'
                     }
                 }}>
-                { messages &&
+                {messages &&
                     messages.map((message, index) => {
-                        const align = index % 2 === 0 ? 'flex-end' : 'flex-start';
-                        return (<Box key={index+message.sender} sx={{alignSelf: align}}>
-                            <ChatMessage message = {message}>
+                        const align = message.sender==='Me' ? 'flex-end' : 'flex-start';
+                        return (<Box key={index + message.sender} sx={{alignSelf: align}}>
+                            <ChatMessage message={message}>
                             </ChatMessage>
                         </Box>)
                     })
@@ -98,10 +97,10 @@ const ChatBody = () => {
                 />
                 <Button
                     type='submit'
-                    onClick={() => {
+                    onClick={async() => {
                         if (newMsg) {
-                            const msg = {text: newMsg, sender: 'Me'};
-                            setMessages(addMessage({message: msg}));
+                            const msg = {sender: 'Me',text: newMsg, date: null};
+                            await ChatService.sendMessage(msg, (m)=>dispatch(addMessage({message: m})));
                             setNewMsg('');
                         }
                     }}
