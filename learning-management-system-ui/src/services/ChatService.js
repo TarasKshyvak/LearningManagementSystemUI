@@ -51,6 +51,7 @@ export default class ChatService {
             setTimeout(this.start, 5000);
         }
         await this.Handshake(userId);
+        return this.connection.state === HubConnectionState.Connected;
     }
 
     static async initConnection(addMessage) {

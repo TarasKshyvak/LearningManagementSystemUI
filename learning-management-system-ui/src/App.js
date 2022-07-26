@@ -21,10 +21,10 @@ function App() {
     useEffect(() => {
         if(userId) {
             (async () => {
-                await ChatService.start(userId, (m)=>dispatch(addMessage({message: m})));
-                dispatch(setConnected({isConnected: true}));
-                const history = await ChatService.GetChatHistory();
+                const state = await ChatService.start(userId, (m)=>dispatch(addMessage({message: m})));
 
+                const history = await ChatService.GetChatHistory();
+                dispatch(setConnected({isConnected: state}));
                 dispatch(addMessages({messages: history.chatMessages}));
                 dispatch(setGroup({group: {name: history.groupName, id: history.groupId}}));
                 dispatch(setUser({user: {userName: history.userName, id: history.userId}}));

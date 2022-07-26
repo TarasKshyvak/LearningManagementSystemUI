@@ -5,9 +5,8 @@ import ChatMessage from "./ChatMessage";
 import Divider from "@mui/material/Divider";
 import {Button, TextField} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import ChatService from "../../services/ChatService";
-
 
 const ChatBody = () => {
     const [newMsg, setNewMsg] = useState('');
@@ -40,8 +39,8 @@ const ChatBody = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#74EBD5',
-                backgroundImage: 'linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%)',
+                backgroundColor: '#53e5ea',
+                backgroundImage: 'linear-gradient(90deg, #53E5EA 0%, #9FACE6 100%)',
                 borderTopLeftRadius: '15px',
                 borderTopRightRadius: '15px',
                 boxShadow: 'rgba(0, 0, 0, 0.3) 0px 12px 10px 0px',
@@ -75,7 +74,7 @@ const ChatBody = () => {
                     messages.map((message, index) => {
                         const align = message.sender === user.userName ? 'flex-end' : 'flex-start';
                         return (<Box key={index + message.sender} sx={{alignSelf: align}}>
-                            <ChatMessage message={message}>
+                            <ChatMessage message={message} currentUser={user}>
                             </ChatMessage>
                         </Box>)
                     })
@@ -111,7 +110,6 @@ const ChatBody = () => {
                     />
                     <Button
                         type='submit'
-
                         sx={{fontSize: '12px', padding: '0 14px'}} variant="contained" endIcon={<SendIcon/>}>
                         Send
                     </Button>
