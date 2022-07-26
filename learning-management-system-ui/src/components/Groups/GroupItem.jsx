@@ -9,6 +9,7 @@ const GroupItem = (props) => {
     let startDate = props.group.startEducation.toString();
     let endDate = props.group.endEducation.toString();
 
+    //for button styles
     const [isActive, setIsActive] = useState(props.group.isActive);
 
     const setGroupState = async () => {      
