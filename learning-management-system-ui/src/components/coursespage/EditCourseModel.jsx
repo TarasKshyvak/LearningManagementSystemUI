@@ -47,7 +47,6 @@ export default function EditCoursesModel({ setOpen, setErrors, cours, setCours }
         setErrors(response.errors);
       }
       setDisabled(false);
-      console.log(response);
     },
   });
 

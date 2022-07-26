@@ -20,7 +20,6 @@ function App() {
       await sendUserId();
       connection.on("ShowNotification", (message) => {
         setMessages(message);
-        console.log(messages);
       });
     })();
   }, []);

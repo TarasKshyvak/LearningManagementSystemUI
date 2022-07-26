@@ -33,12 +33,10 @@ export default function AddUserModel({ handleClose, setErrors, courses, setUsers
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // setDisabled(true);
+      setDisabled(true);
       setErrors([]);
-      console.log(values);
       let data = JSON.stringify(values, null, 2);
       let response = await CoursesModule.CreateCours(data);
-      console.log(response.data);
       if (response.errors === null) {
         handleClose(true);
       setUsers([response.data, ...courses]);
@@ -48,7 +46,6 @@ export default function AddUserModel({ handleClose, setErrors, courses, setUsers
       } 
 
       setDisabled(false);
-      console.log(response);
     },
   });
 

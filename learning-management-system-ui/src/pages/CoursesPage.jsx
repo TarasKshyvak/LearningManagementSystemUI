@@ -20,7 +20,6 @@ const CoursesPage = () => {
     setUsers(response.data);
   });
 
-  console.log(userError);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
