@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import GroupItem from "./GroupItem";
 import classes from './Groups.module.css';
 import GroupsSort from "./GroupsSort";

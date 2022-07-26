@@ -8,7 +8,7 @@ import { useFetching } from '../hooks/useFetching';
 import { useObserver } from '../hooks/useObserver';
 import GroupsService from '../services/GroupsService';
 import StudentsService from '../services/StudentsService';
-import { setGroupsArray } from '../store/groupSlice';
+import { setGroupsArray, updateGroupState } from '../store/groupSlice';
 import { getPageCount } from '../utils/pages';
 
 const Groups = () => {
@@ -61,11 +61,8 @@ const Groups = () => {
     }
 
     const changeGroupState = (group) => {
-        group.isActive = !group.isActive;
-        const itemIndex = groups.findIndex(g => g.id === group.id);
-        const changedArr = [...groups];
-        changedArr[itemIndex] = group;
-        setSortedGroups(changedArr);
+        dispatch(updateGroupState({group}));
+        setSortedGroups(groups);
     }
 
     const sortGroups = (choice) => {
