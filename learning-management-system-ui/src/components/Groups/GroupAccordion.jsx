@@ -42,7 +42,7 @@ const GroupAccordion = (props) => {
                         {students.map(student => 
                             <div key={student.id} className={classes.acc_details}>
                                 <div>{student.firstName} {student.lastName}</div>
-                                <div>{student.userName} | {student.email}</div>
+                                <div>{student.email}</div>
                             </div>
                         )}
                     </div>
