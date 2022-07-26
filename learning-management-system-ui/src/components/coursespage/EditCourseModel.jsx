@@ -21,7 +21,7 @@ const validationSchema = yup.object({
     .required("Course Description is required"),
 });
 
-export default function EditCoursesModel({ setOpen, setErrors, cours }) {
+export default function EditCoursesModel({ setOpen, setErrors, cours, setCours }) {
   const [isDisabled, setDisabled] = useState(false);
 
   const formik = useFormik({
@@ -39,14 +39,14 @@ export default function EditCoursesModel({ setOpen, setErrors, cours }) {
 
        data = JSON.stringify(data, null, 2);
       let response = await CoursesModule.putCoursbyID(cours.id, data);
-      debugger
       if (response.errors === null) {
+        
+        setCours(response.data);
         setOpen(false);
       } else {
         setErrors(response.errors);
       }
       setDisabled(false);
-      console.log(response);
     },
   });
 
