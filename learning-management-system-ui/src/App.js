@@ -9,22 +9,28 @@ import Groups from "./pages/Groups";
 import ChatWindow from "./components/chat/ChatWindow";
 import {useEffect} from "react";
 import ChatService from "./services/ChatService";
-import {useDispatch} from "react-redux";
-import {addMessages, addMessage} from "./store/chatSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {addMessages, addMessage, setGroup, setUser, setConnected} from "./store/chatSlice";
+
 
 function App() {
 
     const dispatch = useDispatch();
+    const userId = useSelector(state=> state.chat.userId);
 
     useEffect(() => {
-        (async () => {
-            await ChatService.start((m)=>dispatch(addMessage({message: m})));
-            await ChatService.Handshake();
-            const history = await ChatService.GetChatHistory();
-            console.log(history.chatMessages);
-            dispatch(addMessages({messages: history.chatMessages}));
-        })();
-    }, []);
+        if(userId) {
+            (async () => {
+                await ChatService.start(userId, (m)=>dispatch(addMessage({message: m})));
+                dispatch(setConnected({isConnected: true}));
+                const history = await ChatService.GetChatHistory();
+
+                dispatch(addMessages({messages: history.chatMessages}));
+                dispatch(setGroup({group: {name: history.groupName, id: history.groupId}}));
+                dispatch(setUser({user: {userName: history.userName, id: history.userId}}));
+            })();
+        }
+    }, [userId]);
 
     return (
         <div className="App">
@@ -44,7 +50,6 @@ function App() {
                     <Route path={routes.groups} element={<Groups></Groups>}>
                     </Route>
 
-                    //For testing
                     <Route path={routes.chat} element={
                         <ChatWindow></ChatWindow>
                     }>

@@ -97,7 +97,7 @@ export default function UserTable() {
                             {/*<StyledTableCell align={alignment}>{row.isActive ? '+' : '-'}</StyledTableCell>*/}
                             <StyledTableCell align={alignment}>
                                 <Box sx={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-                                    <Fab disabled={!row.isActive} onClick={() => {
+                                    <Fab sx={{ zIndex: 200}} disabled={!row.isActive} onClick={() => {
                                         handleOpenModal(true);
                                         setUpdateErrors([]);
                                         setCurrentUser(row);
@@ -105,7 +105,7 @@ export default function UserTable() {
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
 
-                                    <Fab onClick={() => {
+                                    <Fab sx={{ zIndex: 200}} onClick={() => {
                                         setCurrentUser(row);
                                         setOpenDialogRemove(true);
                                     }}

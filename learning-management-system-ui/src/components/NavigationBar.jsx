@@ -14,6 +14,12 @@ import InputBase from '@mui/material/InputBase';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import {routes} from "./Routes";
 import { Link } from 'react-router-dom';
+import {Button, Slide, Zoom} from "@mui/material";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Collapse from "@mui/material/Collapse";
+import ChatWindow from "./chat/ChatWindow";
 
 const drawerWidth = 240;
 
@@ -79,6 +85,8 @@ const NavigationBar = () => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
+    const containerRef = React.useRef(null);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -87,6 +95,15 @@ const NavigationBar = () => {
         setOpen(false);
     };
 
+    //
+    const [openChat, setOpenChat] = React.useState(false);
+
+    const handleClick = () => {
+        setOpenChat(!openChat);
+    };
+
+
+    //
 
     return (
         <div>
@@ -124,14 +141,36 @@ const NavigationBar = () => {
                             />
                         </Search>
                     </Box>
-                    <Link style={{textDecoration: 'none', color: '#000'}} to={routes.chat}>
-                        <Box sx={{display: 'flex'}}>
+                    {/*<Link style={{textDecoration: 'none', color: '#000'}} to={routes.chat}>*/}
+                        <Box
+                            onClick={handleClick}
+                            sx={{display: 'flex'}}>
                             <MailIcon/>
                         </Box>
-                    </Link>
+
+
+                    {/*</Link>*/}
                 </Toolbar>
             </AppBar>
             <Menu handleDrawerClose={handleDrawerClose} open={open} theme={theme}></Menu>
+            {/*<Box*/}
+            {/*    sx={{position: 'fixed',*/}
+            {/*        right: 10,*/}
+            {/*        top: 100,*/}
+            {/*        zIndex: 999,  width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}*/}
+            {/*    component="nav"*/}
+            {/*    aria-labelledby="nested-list-subheader"*/}
+            {/*>*/}
+            {/*    /!*<Collapse in={openChat} timeout="auto" unmountOnExit>*!/*/}
+
+            {/*    /!*</Collapse>*!/*/}
+            {/*    */}
+            {/*</Box>*/}
+            <Slide sx={{position: 'fixed', right: '20px', top: '70px', zIndex: 999,}} timeout={600} direction="down" in={openChat} container={containerRef.current}>
+                <Box >
+                    <ChatWindow></ChatWindow>
+                </Box>
+            </Slide>
         </div>
     );
 };

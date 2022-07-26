@@ -1,24 +1,22 @@
 import * as signalR from "@microsoft/signalr";
 import {HubConnectionState} from "@microsoft/signalr";
 import {routes} from "../components/Routes";
-import {useDispatch} from "react-redux";
-import {addMessage} from "../store/chatSlice";
-
 
 export default class ChatService {
 
-    static connection = null;
+    static connection = new signalR.HubConnectionBuilder()
+        .withUrl(routes.chatApi)
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
 
-    static async sendMessage(message, addMessage) {
+    static async sendMessage(message) {
         if (this.connection === null ||
             this.connection.state !== HubConnectionState.Connected) {
             console.log('No connection');
             return;
         }
-        console.log(message);
         //TODO: Fix date issue
         await this.connection.invoke("MessageHandler", {Sender: message.sender, Text: message.text});
-        // addMessage(message);
     }
 
     static async GetChatHistory() {
@@ -30,16 +28,20 @@ export default class ChatService {
         return await this.connection.invoke("GetChatHistory");
     }
 
-    static async Handshake() {
+    static async Handshake(userId) {
         if (this.connection === null
             || this.connection.state !== HubConnectionState.Connected) {
             console.log("ERROR");
             return;
         }
-        await this.connection.invoke("Handshake", "fcb2e2f1-c550-4b81-30aa-08da479acca2");
+        await this.connection.invoke("Handshake", userId);
     }
 
-    static async start(addMessage) {
+    static async start(userId, addMessage) {
+        if(this.connection.state === HubConnectionState.Connected){
+            console.log('Trying to reconnect...')
+            return;
+        }
         await this.initConnection(addMessage);
         try {
             await this.connection.start();
@@ -48,22 +50,23 @@ export default class ChatService {
             console.log(err);
             setTimeout(this.start, 5000);
         }
+        await this.Handshake(userId);
     }
 
     static async initConnection(addMessage) {
-        this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(routes.chatApi)
-            .configureLogging(signalR.LogLevel.Information)
-            .build();
 
-        this.connection.onclose(async () => {
-            await this.start();
-        });
+        // this.connection.onclose(async () => {
+        //     await this.start();
+        // });
 
         this.connection.on("ReceiveMessage", message => {
-            console.log(message);
             addMessage(message);
         });
+
+        this.connection.on("Disconnect", async (response)=>{
+            console.log(response);
+        });
+
     }
 }
 
