@@ -4,13 +4,14 @@
 .groups_container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 /*GroupsSort.jsx
 *****************************************************************/
 
 .groups_sort {
-    text-align: start;
+    text-align: center;
 }
 
 .groups_select {
@@ -23,23 +24,25 @@
 *****************************************************************/
 
 .group_item {
-    max-width: 99%;
+    max-width: 90%;
+    min-width: 70%;
     border: 1px solid lightgray;
     border-radius: 10px;
     padding: 20px;
     padding-top: 5px;
     margin-bottom: 20px;
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.2);
+    text-align: left;
 }
 
 Button.active_group {
-    margin-top: 5px;
+    margin-top: 15px;
     color: green;
     border-color: green;
 }
 
 Button.inactive_group {
-    margin-top: 5px;
+    margin-top: 15px;
     color: lightslategrey;
     border-color: lightslategrey;
 }

@@ -13,10 +13,11 @@ const GroupAccordion = (props) => {
     }
 
     return (
-        <div>
+        <div style={{
+            marginTop: '20px'
+        }}>
             <Accordion
                 sx={{
-                    marginTop: '10px',
                     border: '2px solid lightgrey',
                     boxShadow: 'none'
                 }}
@@ -41,7 +42,7 @@ const GroupAccordion = (props) => {
                         {students.map(student => 
                             <div key={student.id} className={classes.acc_details}>
                                 <div>{student.firstName} {student.lastName}</div>
-                                <div>{student.userName} | {student.email}</div>
+                                <div>{student.email}</div>
                             </div>
                         )}
                     </div>

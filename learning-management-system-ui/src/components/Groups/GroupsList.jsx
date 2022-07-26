@@ -4,6 +4,7 @@ import classes from './Groups.module.css';
 import GroupsSort from "./GroupsSort";
 
 const GroupsList = ({groups, title, value, sortGroups, changeGroupState}) => {
+    
     return (
         <div>
             <h1 style={{textAlign: 'center'}}>

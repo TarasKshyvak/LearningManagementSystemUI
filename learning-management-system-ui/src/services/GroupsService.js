@@ -3,8 +3,13 @@ import ApiService from "./ApiService";
 import { routes } from '../components/Routes';
 
 export default class GroupsService {
-    static async getGroups() {
-        const response = await ApiService.get(routes.groups);
+    static async getGroups(pageNumber, pageSize) {
+        const response = await axios.get(routes.apiUrl + routes.groups, {
+            params: {
+                PageNumber: pageNumber,
+                PageSize: pageSize
+            }
+        });
         return response;
     }
 
