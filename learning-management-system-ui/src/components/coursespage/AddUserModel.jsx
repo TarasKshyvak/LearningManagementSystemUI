@@ -21,7 +21,7 @@ const validationSchema = yup.object({
     .required("Course Description is required"),
 });
 
-export default function AddUserModel({ handleClose, setErrors }) {
+export default function AddUserModel({ handleClose, setErrors, courses, setUsers }) {
   const [isDisabled, setDisabled] = useState(false);
 
   
@@ -33,13 +33,16 @@ export default function AddUserModel({ handleClose, setErrors }) {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      setDisabled(true);
+      // setDisabled(true);
       setErrors([]);
       console.log(values);
       let data = JSON.stringify(values, null, 2);
       let response = await CoursesModule.CreateCours(data);
+      console.log(response.data);
       if (response.errors === null) {
         handleClose(true);
+      setUsers([response.data, ...courses]);
+
       } else {
         setErrors(response.errors);
       } 

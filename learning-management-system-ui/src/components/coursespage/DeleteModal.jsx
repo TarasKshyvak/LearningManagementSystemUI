@@ -3,8 +3,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import CoursesModule from "../../services/modules/CoursesModule";
 
-export default function DelleteModal({ setOpen, cours }) {
-
+export default function DelleteModal({ setOpen, cours, setCours }) {
   return (
     <Box>
       <h3>You want Change Course Status(isActive/is not Active)?</h3>
@@ -27,6 +26,8 @@ export default function DelleteModal({ setOpen, cours }) {
           type="submit"
           onClick={() => {
             CoursesModule.deleteCoursbyID(cours.id);
+            cours.isActive = !cours.isActive;
+            setCours(cours);
             setOpen(false);
           }}
         >
