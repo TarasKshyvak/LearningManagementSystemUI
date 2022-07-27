@@ -16,18 +16,21 @@ import {addMessages, addMessage, setGroup, setUser, setConnected} from "./store/
 function App() {
 
     const dispatch = useDispatch();
-    const userId = useSelector(state=> state.chat.userId);
+    const userId = useSelector(state => state.chat.userId);
 
     useEffect(() => {
-        if(userId) {
+        if (userId) {
             (async () => {
-                const state = await ChatService.start(userId, (m)=>dispatch(addMessage({message: m})));
-
-                const history = await ChatService.GetChatHistory();
+                const state = await ChatService.start(userId);
+                console.log(state)
                 dispatch(setConnected({isConnected: state}));
-                dispatch(addMessages({messages: history.chatMessages}));
-                dispatch(setGroup({group: {name: history.groupName, id: history.groupId}}));
-                dispatch(setUser({user: {userName: history.userName, id: history.userId}}));
+                if (state) {
+                    const history = await ChatService.GetChatHistory();
+                    await ChatService.initConnection((m) => dispatch(addMessage({message: m})));
+                    dispatch(addMessages({messages: history.chatMessages}));
+                    dispatch(setGroup({group: {name: history.groupName, id: history.groupId}}));
+                    dispatch(setUser({user: {userName: history.userName, id: history.userId}}));
+                }
             })();
         }
     }, [userId]);
@@ -49,12 +52,6 @@ function App() {
                     </Route>
                     <Route path={routes.groups} element={<Groups></Groups>}>
                     </Route>
-
-                    <Route path={routes.chat} element={
-                        <ChatWindow></ChatWindow>
-                    }>
-                    </Route>
-
                     <Route path='*' element={<div>Not found</div>}>
                     </Route>
                     <Route path='/' element={< div> Home</div>}>

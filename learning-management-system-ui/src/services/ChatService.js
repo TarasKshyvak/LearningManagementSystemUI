@@ -37,12 +37,11 @@ export default class ChatService {
         await this.connection.invoke("Handshake", userId);
     }
 
-    static async start(userId, addMessage) {
+    static async start(userId) {
         if(this.connection.state === HubConnectionState.Connected){
             console.log('Trying to reconnect...')
             return;
         }
-        await this.initConnection(addMessage);
         try {
             await this.connection.start();
             console.log("SignalR Connected.");
@@ -65,9 +64,8 @@ export default class ChatService {
         });
 
         this.connection.on("Disconnect", async (response)=>{
-            console.log(response);
+            await this.connection.stop();
         });
-
     }
 }
 

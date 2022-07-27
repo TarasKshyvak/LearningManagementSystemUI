@@ -12,10 +12,12 @@ const chatSlice = createSlice({
     reducers: {
         addMessage(state, action) {
             state.messages.push(action.payload.message);
+            console.log(state.messages)
         },
 
         addMessages(state, action) {
             state.messages = action.payload.messages;
+
         },
 
         setGroup(state, action) {
@@ -28,10 +30,6 @@ const chatSlice = createSlice({
 
         setUserId(state, action) {
             state.userId = action.payload.userId;
-        },
-
-        setConnectionState(state, action) {
-            state.connectionState = action.payload.state;
         },
 
         setConnected(state, action)
