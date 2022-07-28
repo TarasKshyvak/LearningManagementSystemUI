@@ -76,7 +76,6 @@ const UserUpdateForm = ({user, handleClose, setErrors}) => {
             }
 
             const res = await UserService.put(user.id, data);
-            console.log(dataJson)
             if (res.errors) {
                 setErrors(res.errors);
             } else {

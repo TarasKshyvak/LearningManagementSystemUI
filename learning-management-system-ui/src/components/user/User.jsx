@@ -23,7 +23,6 @@ function User() {
     const [fetching, isLoading, userError] = useFetching(async () => {
         const response = await UserService.getUsers();
         const data = response.data;
-        console.log(data)
         dispatch(addUsers(data));
     });
 

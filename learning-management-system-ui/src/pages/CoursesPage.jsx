@@ -20,7 +20,6 @@ const CoursesPage = () => {
     setUsers(response.data);
   });
 
-  console.log(userError);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -33,7 +32,7 @@ const CoursesPage = () => {
       {userError && <div>Error{userError}</div>}
       <Box sx={{ width: "100%", maxWidth: 700, bgcolor: "background.paper" }}>
         {courses.map((cours) => (
-          <Cours cours={cours} key={cours.id} />
+          <Cours courses={cours} key={cours.id} />
         ))}
       </Box>
       <Box position="fixed" sx={{ bottom: "10%", right: "5%", zIndex: 998 }}>
@@ -44,7 +43,7 @@ const CoursesPage = () => {
           }}
         />
         <Modall handleClose={handleClose} open={open} errors={errors}>
-          <AddUserModel handleClose={handleClose} setErrors={setErrors} />
+          <AddUserModel handleClose={handleClose} setErrors={setErrors} courses={courses} setUsers={setUsers} />
         </Modall>
       </Box>
     </div>

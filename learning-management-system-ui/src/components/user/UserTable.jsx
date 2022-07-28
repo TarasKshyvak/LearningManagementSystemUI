@@ -51,7 +51,6 @@ export default function UserTable() {
 
 
     const handleSubmitRemove = () => {
-        console.log(currentUser);
         const response = UserService.delete(currentUser.id);
         const user = {...currentUser};
 
