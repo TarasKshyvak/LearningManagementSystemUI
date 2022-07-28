@@ -11,6 +11,8 @@ import Groups from "./pages/Groups";
 import { connection, start, sendUserId } from "./services/NotificationHub";
 import Home from "./pages/Home";
 import { Chat } from "@mui/icons-material";
+import Subjects from './pages/Subjects';
+import SubjectIdPage from './pages/SubjectIdPage';
 
 function App() {
   const [messages, setMessages] = React.useState([]);
@@ -46,7 +48,12 @@ function App() {
                 </div>
               }
             ></Route>
-            <Route path={routes.groups} element={<div>groups</div>}></Route>
+            <Route path={routes.groups} element={<Groups/>}>
+            </Route>
+            <Route path={routes.subjects} element={<Subjects/>}>
+            </Route>
+            <Route path={routes.subjects + "/:id"} element={<SubjectIdPage/>}>
+            </Route>
             //For testing
             <Route path="/chat" element={<Chat></Chat>}></Route>
             <Route path="*" element={<div>Not found</div>}></Route>

@@ -6,5 +6,8 @@ export const routes = {
     groups: '/Groups',
     notificationHub:'https://localhost:7285/notification',
     students: '/Students',
-    management: '/Management'
+    management: '/Management',
+    subjects: '/Subjects',
+    learning: '/Learning',
+    topics: '/Topics'
 };
