@@ -1,16 +1,17 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import MuiDrawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
+import { EmojiSymbols } from '@mui/icons-material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MenuItem from './MenuItem';
 import GroupIcon from '@mui/icons-material/Group';
+import GroupsIcon from '@mui/icons-material/Groups';
 import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
-import GroupsIcon from '@mui/icons-material/Groups';
+import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
+import MenuItem from './MenuItem';
 import { routes } from './Routes';
 
 
@@ -84,6 +85,11 @@ const menuList = [
         text: 'Groups',
         image: <GroupsIcon />,
         route: routes.groups
+    },
+    {
+        text: 'Subjects',
+        image: <EmojiSymbols />,
+        route: routes.subjects
     },
 ];
 

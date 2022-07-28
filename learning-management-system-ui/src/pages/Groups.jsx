@@ -46,7 +46,7 @@ const Groups = () => {
         setPageNumber(pageNumber + 1);
     });
 
-    const [fetchUsers, userError] = useFetching(async () => {
+    const [fetchUsers, isUsersLoading, userError] = useFetching(async () => {
         const response = await StudentsService.getStudentsWithoutGroups();
         const data = response.data;
         setStudentsWithoutGroups(data);

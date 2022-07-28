@@ -8,6 +8,8 @@ import CoursesPage from './pages/CoursesPage';
 import Groups from './pages/Groups';
 import Home from './pages/Home';
 import {Chat} from "@mui/icons-material";
+import Subjects from './pages/Subjects';
+import SubjectIdPage from './pages/SubjectIdPage';
 
 function App() {
   return (
@@ -26,6 +28,10 @@ function App() {
           <Route path={routes.courses} element={<div><CoursesPage/></div>}>
           </Route>
           <Route path={routes.groups} element={<Groups/>}>
+          </Route>
+          <Route path={routes.subjects} element={<Subjects/>}>
+          </Route>
+          <Route path={routes.subjects + "/:id"} element={<SubjectIdPage/>}>
           </Route>
           //For testing
           <Route path='/chat' element={<Chat></Chat>}>

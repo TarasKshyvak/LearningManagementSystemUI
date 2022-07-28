@@ -1,0 +1,14 @@
+/*SubjectsTable.jsx
+*****************************************************************/
+.subjects_table {
+    margin: 0 auto;
+    width: 50%;
+    min-width: 300px;
+}
+
+.table_head {
+    background-color: '#bd92c9';
+    color: 'white';
+    font-size: 17;
+    font-weight: 900;
+}

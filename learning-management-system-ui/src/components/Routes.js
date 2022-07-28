@@ -5,5 +5,8 @@ export const routes = {
     courses: '/courses',
     groups: '/Groups',
     students: '/Students',
-    management: '/Management'
+    management: '/Management',
+    subjects: '/Subjects',
+    learning: '/Learning',
+    topics: '/Topics'
 };
