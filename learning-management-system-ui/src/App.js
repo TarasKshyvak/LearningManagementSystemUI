@@ -21,7 +21,8 @@ function App() {
       await start();
       await sendUserId();
       connection.on("ShowNotification", (message) => {
-        setMessages(message);
+        setMessages([message]);
+      console.log(message);
       });
     })();
   }, []);
@@ -32,7 +33,7 @@ function App() {
         <Box>
           <Box position="fixed" zIndex={999}>
             {messages.map((message, index) => (
-              <InfoMessage key={index + message} message={message}>
+              <InfoMessage key={index + message.sendingDate } message={message}>
                 {}
               </InfoMessage>
             ))}

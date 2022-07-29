@@ -13,7 +13,7 @@ const InfoMessage = ({ message }) => {
       <Collapse in={open}>
         <Box width="100%" zIndex="999" sx={{ m: 1 }}>
           <Alert
-          open = {open}
+          // open = {open}
             severity={severity}
             onClose={() => {
               setOpen(false);
@@ -22,7 +22,7 @@ const InfoMessage = ({ message }) => {
             {message.text}
           </Alert>
         </Box>
-      </Collapse>
+      </Collapse> 
   );
 };
 
