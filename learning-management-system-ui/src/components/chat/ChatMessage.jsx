@@ -39,7 +39,6 @@ const ChatMessage = ({message, currentUser}) => {
                         display: 'inline-block',
                         wordBreak: 'break-all'
                     }}
-
                 >
                     {message.text}
                 </Typography>
