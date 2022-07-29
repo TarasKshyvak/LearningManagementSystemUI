@@ -7,26 +7,31 @@ import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 import Groups from "./pages/Groups";
 import ChatWindow from "./components/chat/ChatWindow";
-import { connection, start, sendUserId } from "./services/NotificationHub";
+import {connection, start, sendUserId} from "./services/NotificationHub";
 import {useEffect} from "react";
 import ChatService from "./services/ChatService";
 import {useDispatch, useSelector} from "react-redux";
 import {addMessages, addMessage, setGroup, setUser, setConnected} from "./store/chatSlice";
+import InfoMessage from "./components/InfoMessage";
+import {Box} from "@mui/system";
+import SubjectIdPage from "./pages/SubjectIdPage";
+import Subjects from "./pages/Subjects";
+import Home from "./pages/Home";
 
 
 function App() {
 //Notifications
-  const [messages, setMessages] = React.useState([]);
-  React.useEffect(() => {
-    (async () => {
-      await start();
-      await sendUserId();
-      connection.on("ShowNotification", (message) => {
-        setMessages([message]);
-      console.log(message);
-      });
-    })();
-  }, []);
+    const [messages, setMessages] = React.useState([]);
+    React.useEffect(() => {
+        (async () => {
+            await start();
+            await sendUserId();
+            connection.on("ShowNotification", (message) => {
+                setMessages([message]);
+                console.log(message);
+            });
+        })();
+    }, []);
 //Notifications
 
     const dispatch = useDispatch();
@@ -54,15 +59,15 @@ function App() {
     return (
         <div className="App">
             <AppContainer>
-                         <Box position="fixed" zIndex={999}>
-            {messages.map((message, index) => (
-              <InfoMessage key={index + message.sendingDate } message={message}>
-                {}
-              </InfoMessage>
-            ))}
-          </Box>
+                <Box position="fixed" zIndex={999}>
+                    {messages.map((message, index) => (
+                        <InfoMessage key={index + message.sendingDate} message={message}>
+                            {}
+                        </InfoMessage>
+                    ))}
+                </Box>
                 <Routes>
-                    <Route path={routes.home} element={<div>Home</div>}>
+                    <Route path={routes.home} element={<Home></Home>}>
                     </Route>
                     <Route path={routes.users} element={<User></User>}>
                     </Route>
@@ -82,3 +87,6 @@ function App() {
             </AppContainer>
         </div>
     );
+}
+
+export default App;

@@ -5,11 +5,11 @@ export const routes = {
     courses: '/courses',
     groups: '/Groups',
     chatApi: 'https://localhost:7285/chat',
-    chat: '/chat'
+    chat: '/chat',
     notificationHub:'https://localhost:7285/notification',
     students: '/Students',
     management: '/Management',
     subjects: '/Subjects',
     learning: '/Learning',
-    topics: '/Topics'
+    topics: '/Topics',
 };
