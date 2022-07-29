@@ -77,13 +77,12 @@ const UserCreationForm = ({setUserErrors, handleClose}) => {
             if (res.errors) {
                 res.errors.push('Error test');
                 setUserErrors(res.errors);
+                setDisabledBtn(false);
             } else {
                 const model = res.data;
                 dispatch(addUser({user: model}));
                 handleClose();
             }
-            setDisabledBtn(false);
-
         },
     });
     return (

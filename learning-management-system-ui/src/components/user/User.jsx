@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import {CircularProgress} from "@mui/material";
 import {useDispatch} from 'react-redux';
 import {addUsers} from '../../store/userSlice';
+import ChatService from "../../services/ChatService";
 
 function User() {
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {styled} from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,7 +21,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from '../../store/userSlice';
 
 
-
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#bd92c9',
@@ -38,7 +37,9 @@ export default function UserTable() {
     const [openDialogRemove, setOpenDialogRemove] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+
     const users = useSelector(state => state.users.users);
+
     const handleCloseModal = () => {
         setOpenModal(false);
     }
@@ -46,8 +47,8 @@ export default function UserTable() {
         setOpenModal(true);
     }
     const[updateErrors, setUpdateErrors] = useState([]);
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
 
 
     const handleSubmitRemove = () => {
@@ -96,7 +97,7 @@ export default function UserTable() {
                             {/*<StyledTableCell align={alignment}>{row.isActive ? '+' : '-'}</StyledTableCell>*/}
                             <StyledTableCell align={alignment}>
                                 <Box sx={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-                                    <Fab disabled={!row.isActive} onClick={() => {
+                                    <Fab sx={{ zIndex: 200}} disabled={!row.isActive} onClick={() => {
                                         handleOpenModal(true);
                                         setUpdateErrors([]);
                                         setCurrentUser(row);
@@ -104,7 +105,7 @@ export default function UserTable() {
                                         <EditIcon sx={{fontSize: '20px'}}/>
                                     </Fab>
 
-                                    <Fab onClick={() => {
+                                    <Fab sx={{ zIndex: 200}} onClick={() => {
                                         setCurrentUser(row);
                                         setOpenDialogRemove(true);
                                     }}

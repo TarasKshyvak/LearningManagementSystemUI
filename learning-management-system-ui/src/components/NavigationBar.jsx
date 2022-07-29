@@ -11,7 +11,8 @@ import Menu from './Menu';
 import {alpha} from '@mui/material/styles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import InputBase from '@mui/material/InputBase';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import {Slide} from "@mui/material";
+import ChatWindow from "./chat/ChatWindow";
 
 const drawerWidth = 240;
 
@@ -77,6 +78,8 @@ const NavigationBar = () => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
+    const containerRef = React.useRef(null);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -85,6 +88,13 @@ const NavigationBar = () => {
         setOpen(false);
     };
 
+    // Chat popup
+    const [openChat, setOpenChat] = React.useState(false);
+
+    const handleClick = () => {
+        setOpenChat(!openChat);
+    };
+    //
 
     return (
         <div>
@@ -122,11 +132,19 @@ const NavigationBar = () => {
                             />
                         </Search>
                     </Box>
-                    <Box sx={{display: 'flex'}}>
+                    <Box
+                        onClick={handleClick}
+                        sx={{display: 'flex', cursor: 'pointer', marginRight: '20px'}}>
                         <MailIcon/>
                     </Box>
                 </Toolbar>
             </AppBar>
+            <Slide sx={{position: 'fixed', right: '20px', top: '70px', zIndex: 999,}} timeout={300} direction="down"
+                   in={openChat} container={containerRef.current}>
+                <Box>
+                    <ChatWindow></ChatWindow>
+                </Box>
+            </Slide>
             <Menu handleDrawerClose={handleDrawerClose} open={open} theme={theme}></Menu>
         </div>
     );
