@@ -6,4 +6,10 @@ export const routes = {
     groups: '/Groups',
     chatApi: 'https://localhost:7285/chat',
     chat: '/chat'
+    notificationHub:'https://localhost:7285/notification',
+    students: '/Students',
+    management: '/Management',
+    subjects: '/Subjects',
+    learning: '/Learning',
+    topics: '/Topics'
 };

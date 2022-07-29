@@ -7,6 +7,7 @@ import User from './components/user/User';
 import CoursesPage from './pages/CoursesPage';
 import Groups from "./pages/Groups";
 import ChatWindow from "./components/chat/ChatWindow";
+import { connection, start, sendUserId } from "./services/NotificationHub";
 import {useEffect} from "react";
 import ChatService from "./services/ChatService";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,6 +15,19 @@ import {addMessages, addMessage, setGroup, setUser, setConnected} from "./store/
 
 
 function App() {
+//Notifications
+  const [messages, setMessages] = React.useState([]);
+  React.useEffect(() => {
+    (async () => {
+      await start();
+      await sendUserId();
+      connection.on("ShowNotification", (message) => {
+        setMessages([message]);
+      console.log(message);
+      });
+    })();
+  }, []);
+//Notifications
 
     const dispatch = useDispatch();
     const userId = useSelector(state => state.chat.userId);
@@ -40,11 +54,13 @@ function App() {
     return (
         <div className="App">
             <AppContainer>
-                {/* <Box position="fixed" zIndex={999}>
-            {messages.map((message) => (
-              <InfoMessage message={message}>{}</InfoMessage>
+                         <Box position="fixed" zIndex={999}>
+            {messages.map((message, index) => (
+              <InfoMessage key={index + message.sendingDate } message={message}>
+                {}
+              </InfoMessage>
             ))}
-          </Box> */}
+          </Box>
                 <Routes>
                     <Route path={routes.home} element={<div>Home</div>}>
                     </Route>
@@ -54,6 +70,10 @@ function App() {
                     </Route>
                     <Route path={routes.groups} element={<Groups></Groups>}>
                     </Route>
+                    <Route path={routes.subjects} element={<Subjects/>}>
+                    </Route>
+                    <Route path={routes.subjects + "/:id"} element={<SubjectIdPage/>}>
+                    </Route>
                     <Route path='*' element={<div>Not found</div>}>
                     </Route>
                     <Route path='/' element={< div> Home</div>}>
@@ -62,6 +82,3 @@ function App() {
             </AppContainer>
         </div>
     );
-}
-
-export default App;

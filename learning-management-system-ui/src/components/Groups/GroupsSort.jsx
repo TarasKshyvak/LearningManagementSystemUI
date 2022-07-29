@@ -9,7 +9,7 @@ const GroupsSort = ({value, onChange}) => {
                 <Select
                     value={value}
                     onChange={event => onChange(event.target.value)}
-                    sx={{borderRadius: '9px'}}
+                    sx={{borderRadius: '9px', textAlign: 'left'}}
                 >
                     <MenuItem value='all'>
                         All groups

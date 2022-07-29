@@ -72,7 +72,6 @@ const UserCreationForm = ({setUserErrors, handleClose}) => {
             values.birthday = convertDate(values.birthday);
 
             let data = JSON.stringify(values, null, 2);
-            console.log(data)
             const res = await UserService.post(data);
 
             if (res.errors) {
