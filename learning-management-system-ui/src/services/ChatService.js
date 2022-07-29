@@ -49,7 +49,11 @@ export default class ChatService {
             console.log(err);
             setTimeout(this.start, 5000);
         }
+        this.connection.on("Disconnect", async (response)=>{
+            await this.connection.stop();
+        });
         await this.Handshake(userId);
+        console.log('HERE')
         return this.connection.state === HubConnectionState.Connected;
     }
 
@@ -61,10 +65,6 @@ export default class ChatService {
 
         this.connection.on("ReceiveMessage", message => {
             addMessage(message);
-        });
-
-        this.connection.on("Disconnect", async (response)=>{
-            await this.connection.stop();
         });
     }
 }

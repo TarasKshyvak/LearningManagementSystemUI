@@ -6,7 +6,7 @@ const ErrorAlert = ({children}) => {
     const [open, setOpen] = React.useState(true);
     return (
         <Box>
-            <Collapse in={open}>
+            <Collapse timeout={1000} in={open}>
                 <Box width='100%' zIndex='999' sx={{m: 1}}>
                     <Alert severity="error" onClose={() => {
                         setOpen(false)

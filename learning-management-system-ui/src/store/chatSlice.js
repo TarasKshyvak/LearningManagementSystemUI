@@ -17,7 +17,6 @@ const chatSlice = createSlice({
 
         addMessages(state, action) {
             state.messages = action.payload.messages;
-
         },
 
         setGroup(state, action) {

@@ -139,13 +139,13 @@ const NavigationBar = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Menu handleDrawerClose={handleDrawerClose} open={open} theme={theme}></Menu>
             <Slide sx={{position: 'fixed', right: '20px', top: '70px', zIndex: 999,}} timeout={300} direction="down"
                    in={openChat} container={containerRef.current}>
                 <Box>
                     <ChatWindow></ChatWindow>
                 </Box>
             </Slide>
+            <Menu handleDrawerClose={handleDrawerClose} open={open} theme={theme}></Menu>
         </div>
     );
 };

@@ -19,10 +19,10 @@ function App() {
     const userId = useSelector(state => state.chat.userId);
 
     useEffect(() => {
+        let state = false;
         if (userId) {
             (async () => {
-                const state = await ChatService.start(userId);
-                console.log(state)
+                state = await ChatService.start(userId);
                 dispatch(setConnected({isConnected: state}));
                 if (state) {
                     const history = await ChatService.GetChatHistory();
@@ -33,6 +33,8 @@ function App() {
                 }
             })();
         }
+        dispatch(setConnected({isConnected: true}));
+        dispatch(setConnected({isConnected: state}));
     }, [userId]);
 
     return (
