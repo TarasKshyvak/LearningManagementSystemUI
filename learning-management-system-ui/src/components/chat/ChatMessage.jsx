@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 const ChatMessage = ({message, currentUser}) => {
 
     return (
-        <Box>
+        <Box sx={{width: '100%'}}>
             <Box
                 sx={{
                     borderRadius: '7px',
@@ -15,7 +15,8 @@ const ChatMessage = ({message, currentUser}) => {
                     borderBottomLeftRadius: `${message.sender === currentUser.userName ? '10px' : '0px'}`,
                     backgroundColor: `${message.sender === currentUser.userName ? 'rgba(25,118,209,0.43)' : 'rgba(25,118,209,0.22)'}`,
                     position: 'relative',
-
+                    width: '100%',
+                    textAlign: 'left',
                 }}>
                 {message.sender !== currentUser.userName ?
                     <Typography align='left'
@@ -31,10 +32,14 @@ const ChatMessage = ({message, currentUser}) => {
                 }
 
                 <Typography align='left'
-                            sx={{
-                                fontSize: '14px',
-                                color: '#483737'
-                            }}
+                    sx={{
+                        fontSize: '14px',
+                        color: '#483737',
+                        maxWidth: '250px',
+                        display: 'inline-block',
+                        wordBreak: 'break-all'
+                    }}
+
                 >
                     {message.text}
                 </Typography>
