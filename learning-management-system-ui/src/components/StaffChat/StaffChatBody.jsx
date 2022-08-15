@@ -1,21 +1,15 @@
-import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 import SendIcon from "@mui/icons-material/Send";
-import React from 'react';
+import { Box, Button, Divider, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import ChatMessage from '../chat/ChatMessage';
-import { useState } from 'react';
 import StaffChatService from '../../services/StaffChatService';
-import { useEffect } from 'react';
+import ChatMessage from '../chat/ChatMessage';
 
 const StaffChatBody = () => {
     const messages = useSelector(state => state.staffChat.messages);
     const user = useSelector(state => state.staffChat.user);
 
     const [newMessage, setNewMessage] = useState('');
-
-    useEffect(() => {
-        console.log(messages);
-    }, [messages]);
 
     return (
         <Box

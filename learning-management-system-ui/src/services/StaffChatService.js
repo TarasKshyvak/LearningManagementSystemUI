@@ -48,7 +48,6 @@ export default class StaffChatService {
     static async subscribe(addMessage){
         this.connection.on("ReceiveMessage", message => {
             addMessage({message});
-            console.log('"on" is working', message);
         });
     }
 }
