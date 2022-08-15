@@ -42,7 +42,6 @@ const Groups = () => {
     }, [pageNumber, pageSize]);
     
     useObserver(lastElement, pageNumber < totalPages, isLoading, () => {
-        console.log('observer is working')
         setPageNumber(pageNumber + 1);
     });
 

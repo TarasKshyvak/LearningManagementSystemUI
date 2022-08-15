@@ -13,6 +13,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import InputBase from '@mui/material/InputBase';
 import {Slide} from "@mui/material";
 import ChatWindow from "./chat/ChatWindow";
+import { Chat } from '@mui/icons-material';
+import StaffChatWindow from './StaffChat/StaffChatWindow';
 
 const drawerWidth = 240;
 
@@ -90,9 +92,14 @@ const NavigationBar = () => {
 
     // Chat popup
     const [openChat, setOpenChat] = React.useState(false);
+    const [openStaffChat, setOpenStaffChat] = React.useState(false);
 
     const handleClick = () => {
         setOpenChat(!openChat);
+    };
+
+    const handleStaffClick = () => {
+        setOpenStaffChat(!openStaffChat);
     };
     //
 
@@ -132,10 +139,21 @@ const NavigationBar = () => {
                             />
                         </Search>
                     </Box>
-                    <Box
-                        onClick={handleClick}
-                        sx={{display: 'flex', cursor: 'pointer', marginRight: '20px'}}>
-                        <MailIcon/>
+                    <Box                        
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-evenly',
+                            width: '100px',
+                            cursor: 'pointer',
+                            marginRight: '20px'
+                        }}
+                    >
+                        <MailIcon
+                            onClick={handleClick}
+                        />
+                        <Chat
+                            onClick={handleStaffClick}
+                        />
                     </Box>
                 </Toolbar>
             </AppBar>
@@ -143,6 +161,22 @@ const NavigationBar = () => {
                    in={openChat} container={containerRef.current}>
                 <Box>
                     <ChatWindow></ChatWindow>
+                </Box>
+            </Slide>
+            <Slide 
+                sx={{
+                    position: 'fixed',
+                    right: '20px',
+                    top: '70px',
+                    zIndex: 999,
+                }}
+                timeout={300}
+                direction="down"
+                in={openStaffChat}
+                container={containerRef.current}
+            >
+                <Box>
+                    <StaffChatWindow></StaffChatWindow>
                 </Box>
             </Slide>
             <Menu handleDrawerClose={handleDrawerClose} open={open} theme={theme}></Menu>
