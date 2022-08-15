@@ -12,4 +12,5 @@ export const routes = {
     subjects: '/Subjects',
     learning: '/Learning',
     topics: '/Topics',
+    staffChat: 'https://localhost:7285/staffChat',
 };
