@@ -15,4 +15,6 @@ export const routes = {
     createTest: '/createTest',
     testing: '/Testing',
     tests:'/Tests',
+    staffChat: 'https://localhost:7285/staffChat',
+
 };

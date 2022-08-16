@@ -9,8 +9,8 @@ export const connection = new HubConnectionBuilder()
 export async function start() {
   if (connection.state === "Disconnected") {
     try {
-      await connection.start();
-      console.log("SignalR Connected.");
+      // await connection.start();
+      // console.log("SignalR Connected.");
     } catch (err) {
       console.log(err);
     }
@@ -22,6 +22,6 @@ export async function sendUserId(userId) {
   try {
     await connection.invoke("AddUser", userId);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 }

@@ -21,4 +21,9 @@ export default class UserService {
         const response = await ApiService.put(routes.users + '/'+id, model);
         return response;
     }
+
+    static async getById(id) {
+        const response = await ApiService.get(routes.users + '/' + id);
+        return response;
+    }
 }
