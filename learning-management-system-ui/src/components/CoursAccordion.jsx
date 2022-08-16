@@ -4,8 +4,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AddButton from "./coursespage/AddButton";
-import EditButton from "./coursespage/EditButton";
 import CorseBody from "./coursespage/CorseBody";
 
 const CoursAccordion = ({ courses }) => {
@@ -18,7 +16,9 @@ const CoursAccordion = ({ courses }) => {
     color = "error";
   }
   return (
-    <Accordion sx={{ m: 1 }}>
+    <Accordion
+     onChange={(event, expanded)=>console.log(event.currentTarget, expanded)}
+     sx={{ m: 1 }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

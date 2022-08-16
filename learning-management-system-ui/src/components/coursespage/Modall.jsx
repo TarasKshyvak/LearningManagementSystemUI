@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import { Grid } from "@mui/material";
 import ErrorMessage from "./ErrorMessage";
 
-const style = {
+const styles = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -16,7 +16,7 @@ const style = {
   borderRadius: "10px",
 };
 
-const Modall = ({ open, children, errors = [] }) => {
+const Modall = ({ open, children, errors = [], style = styles }) => {
 
   return (
     <Modal
