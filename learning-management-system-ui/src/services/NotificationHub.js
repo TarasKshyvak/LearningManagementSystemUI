@@ -18,7 +18,7 @@ export async function start() {
 }
 
 export async function sendUserId(userId) {
-  userId = "fcb2e2f1-c550-4b81-30aa-08da479acca2";
+  userId = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
   try {
     await connection.invoke("AddUser", userId);
   } catch (err) {
