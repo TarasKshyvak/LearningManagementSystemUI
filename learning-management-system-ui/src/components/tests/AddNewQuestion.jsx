@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  List,
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -28,7 +29,7 @@ const AddNewQuestion = ({
     >
       <DialogTitle>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          Add questions for "{testState.name}" Test
+          Questions for "{testState.name}" Test
           <Tooltip title="Close">
             <Button onClick={() => setAddNewQuestionState(false)}>
               <HighlightOffIcon color="error"></HighlightOffIcon>
@@ -37,10 +38,19 @@ const AddNewQuestion = ({
         </Box>
       </DialogTitle>
       <DialogContent>
-        {questions.map((question) => {
-          <Question question={question}></Question>
-        })}
-        <AddNewQuestionButton></AddNewQuestionButton>
+        {questions.map((question, index) => (
+          <List maxWidth={true} fullWidth={true}>
+            <Question question={question} index={index + 1}></Question>
+          </List>
+        ))}
+        <Box sx={{display: 'flex', justifyContent:'space-between'}}>
+        <Button onClick={()=>setAddNewQuestionState(false)}>Close</Button>
+          <AddNewQuestionButton
+            testState={testState}
+            setQuestions={setQuestions}
+            questions={questions}
+          ></AddNewQuestionButton>
+        </Box>
       </DialogContent>
     </Dialog>
   );

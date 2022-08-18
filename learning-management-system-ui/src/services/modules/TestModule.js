@@ -1,7 +1,6 @@
 import ApiService from "../ApiService";
 import { routes } from "../../components/Routes";
 
-
 export default class TestModule {
   static async getAllCourses() {
     let allTests = ApiService.get(routes.testing + routes.tests);
@@ -11,6 +10,16 @@ export default class TestModule {
 
   static async CreateTest(body) {
     let tests = await ApiService.post(routes.testing + routes.tests, body);
+
+    return await tests;
+  }
+  static async CreateQuestion(id, body) {
+    id = "/" + id;
+    console.log(id);
+    let tests = await ApiService.post(
+      routes.testing + routes.questions + id,
+      body
+    );
 
     return await tests;
   }
