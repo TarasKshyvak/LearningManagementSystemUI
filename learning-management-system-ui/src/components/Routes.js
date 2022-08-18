@@ -4,9 +4,9 @@ export const routes = {
     users: '/users',
     courses: '/courses',
     groups: '/Groups',
-    chatApi: 'https://localhost:7285/chat',
+    chatApi: 'http://localhost:7285/chat',
     chat: '/chat',
-    notificationHub:'https://localhost:7285/notification',
+    notificationHub:'http://localhost:7285/notification',
     students: '/Students',
     management: '/Management',
     subjects: '/Subjects',
@@ -15,6 +15,7 @@ export const routes = {
     createTest: '/createTest',
     testing: '/Testing',
     tests:'/Tests',
-    staffChat: 'https://localhost:7285/staffChat',
+    staffChat: 'http://learningmanagementsystemapi-dev.us-east-1.elasticbeanstalk.com/staffChat',
+    questions: '/Questions',
 
 };
