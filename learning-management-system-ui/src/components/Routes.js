@@ -12,9 +12,7 @@ export const routes = {
     subjects: '/Subjects',
     learning: '/Learning',
     topics: '/Topics',
-    createTest: '/createTest',
     testing: '/Testing',
     tests:'/Tests',
     staffChat: 'https://localhost:7285/staffChat',
-
 };

@@ -67,7 +67,7 @@ const AddNewTestModal = ({ subject, AddNewTest, setAddNewTest }) => {
         onClose={() => setAddNewTest(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth={true}
+        maxWidth='true'
         scroll="body"
       >
         <DialogTitle>Create new test for "{subject.name}" subject</DialogTitle>

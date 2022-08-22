@@ -24,6 +24,7 @@ import SubjectIdPage from "./pages/SubjectIdPage";
 import Subjects from "./pages/Subjects";
 import Home from "./pages/Home";
 import CreateTest from "./pages/CreateTest";
+import TestIdPage from "./components/Testing/TestIdPage";
 
 function App() {
   //Notifications
@@ -99,7 +100,10 @@ function App() {
             path={routes.subjects + "/:id"}
             element={<SubjectIdPage />}
           ></Route>
-          <Route path={routes.createTest} element={<CreateTest/>}></Route>
+          <Route
+            path={routes.testing + "/:id"}
+            element={<TestIdPage />}
+          ></Route>
           <Route path="*" element={<div>Not found</div>}></Route>
           <Route path="/" element={<div> Home</div>}></Route>
         </Routes>
