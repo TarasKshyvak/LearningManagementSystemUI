@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useFetching } from '../../hooks/useFetching';
 import TestingService from '../../services/TestingService';
-import { setQuestions } from '../../store/testingSlice';
+import { setQuestionsAndDuration } from '../../store/testingSlice';
 import TestContent from './TestContent';
 
 const TestIdPage = () => {
@@ -13,8 +13,9 @@ const TestIdPage = () => {
     const questions = useSelector(state => state.testing.questions);
 
     const [fetchQuestionsByTestId, isLoading, error] = useFetching(async (id) => {
-        const response = await TestingService.getQuestionsByTestId(id);
-        dispatch(setQuestions({ questions: response.data }));
+        const response = await TestingService.getQuestionsForPassing(id);
+        dispatch(setQuestionsAndDuration({ questions: response.data.questions,
+                                           durationInMinutes: response.data.durationInMinutes }));
     });
 
     useEffect(() => {

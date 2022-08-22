@@ -4,12 +4,14 @@ const testingSlice = createSlice({
     name: 'testing',
     initialState: {
         questions: [],
+        durationInMinutes: 10,
         studentAnswers: [],
         result: null,
     },
     reducers: {
-        setQuestions(state, action) {
-            state.questions = action.payload.questions;
+        setQuestionsAndDuration(state, action) {
+            state.questions = action.payload.questions.sort(() => Math.random() - 0.5);
+            state.durationInMinutes = action.payload.durationInMinutes;
         },
         addAnswer(state, action) {
             state.studentAnswers.push(action.payload.answer);
@@ -23,6 +25,6 @@ const testingSlice = createSlice({
     },
 });
 
-export const { setQuestions, addAnswer, resetAnswers, setResult } = testingSlice.actions;
+export const { setQuestionsAndDuration, addAnswer, resetAnswers, setResult } = testingSlice.actions;
 
 export default testingSlice.reducer;

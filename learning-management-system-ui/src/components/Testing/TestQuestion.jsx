@@ -9,7 +9,6 @@ const TestQuestion = ({testId}) => {
     const dispatch = useDispatch();
     const questions = useSelector(state => state.testing.questions);
     const studentAnswers = useSelector(state => state.testing.studentAnswers);
-    const result = useSelector(state => state.testing.result);
     
     const [chosenAnswer, setChosenAnswer] = useState('');
     const lastQuestionIndex = questions.length - 1;
@@ -40,7 +39,6 @@ const TestQuestion = ({testId}) => {
     if (studentAnswers.length === questions.length) {
         (async () => {
             const response = await TestingService.passTest(studentAnswers);
-            console.log("PassTest response", response);
             dispatch(setResult({result: response.data}));
             dispatch(resetAnswers());
         })();

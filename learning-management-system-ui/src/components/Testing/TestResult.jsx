@@ -4,7 +4,12 @@ const TestResult = ({result}) => {
     const date = result.passingDate.toString();
 
     return (
-        <div>
+        <div 
+            style={{
+                backgroundColor: 'lightgray',
+                padding: '20px'
+            }}
+        >
             <h3>
                 Congratulations on passing {result.name}
             </h3>
