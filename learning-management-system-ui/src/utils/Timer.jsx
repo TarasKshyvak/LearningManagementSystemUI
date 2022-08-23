@@ -8,7 +8,7 @@ const Timer = ({ durationInMinutes }) => {
     const dispatch = useDispatch();
     const isExpired = useSelector(state => state.testing.isExpired);
 
-    const [totalSeconds, setTotalSeconds] = useState(10);
+    const [totalSeconds, setTotalSeconds] = useState(durationInMinutes * 60);
 
     useEffect(() => {
         if (totalSeconds > 0) {
