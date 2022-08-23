@@ -9,6 +9,7 @@ const TestQuestion = ({testId}) => {
     const dispatch = useDispatch();
     const questions = useSelector(state => state.testing.questions);
     const studentAnswers = useSelector(state => state.testing.studentAnswers);
+    const isExpired = useSelector(state => state.testing.isExpired);
     
     const [chosenAnswer, setChosenAnswer] = useState('');
     const lastQuestionIndex = questions.length - 1;
@@ -36,7 +37,7 @@ const TestQuestion = ({testId}) => {
         }
     }
 
-    if (studentAnswers.length === questions.length) {
+    if (studentAnswers.length === questions.length || isExpired) {
         (async () => {
             const response = await TestingService.passTest(studentAnswers);
             dispatch(setResult({result: response.data}));
@@ -77,7 +78,6 @@ const TestQuestion = ({testId}) => {
                 sx={{
                     display: 'block',
                     mt: '15px',
-                    mr: '15px',
                     ml: 'auto',
                     borderRadius: '6px',
                 }}

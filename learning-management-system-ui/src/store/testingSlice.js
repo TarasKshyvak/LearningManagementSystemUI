@@ -7,6 +7,7 @@ const testingSlice = createSlice({
         durationInMinutes: 10,
         studentAnswers: [],
         result: null,
+        isExpired: false,
     },
     reducers: {
         setQuestionsAndDuration(state, action) {
@@ -21,10 +22,17 @@ const testingSlice = createSlice({
         },
         setResult(state, action) {
             state.result = action.payload.result;
-        }
+        },
+        setExpired(state) {
+            state.isExpired = true;
+        },
     },
 });
 
-export const { setQuestionsAndDuration, addAnswer, resetAnswers, setResult } = testingSlice.actions;
+export const { setQuestionsAndDuration,
+    addAnswer,
+    resetAnswers,
+    setResult,
+    setExpired } = testingSlice.actions;
 
 export default testingSlice.reducer;
