@@ -24,7 +24,7 @@ const AddNewQuestion = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth={true}
-      maxWidth={true}
+      maxWidth="true"
       scroll="body"
     >
       <DialogTitle>

@@ -20,7 +20,7 @@ const Home = () => {
                 height: '100vh',
                 objectFit: 'contain'
             }}
-                src='https://scontent.fiev4-1.fna.fbcdn.net/v/t31.18172-8/15972800_176570626153747_7760699702441656357_o.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=nWgSfQNL45YAX_wk6hv&tn=ZfVMfpPVUl-96Z7w&_nc_ht=scontent.fiev4-1.fna&oh=00_AT__5TL1I7ag0jiCSUMwh6sJ2tM9WMVjyYmT6kNiTQU-Zg&oe=62FA39CB'
+                src='https://scontent.fiev4-1.fna.fbcdn.net/v/t31.18172-8/15972800_176570626153747_7760699702441656357_o.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=plHqkgL-hRAAX8-Nd6Y&tn=ZfVMfpPVUl-96Z7w&_nc_ht=scontent.fiev4-1.fna&oh=00_AT8x-8jBDK5tRKp091d87t6vd26fscwgdDakVlcCus2f7g&oe=6321C6CB'
             />
             <img
             style={{

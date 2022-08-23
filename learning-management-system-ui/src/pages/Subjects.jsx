@@ -21,7 +21,8 @@ const Subjects = () => {
 
   return (
     <div>
-      {isLoading && (
+      {isLoading 
+      ? (
         <Box
           sx={{
             display: "flex",
@@ -33,8 +34,9 @@ const Subjects = () => {
         >
           <CircularProgress size={50} />
         </Box>
-      )}
-      <SubjectsTable />
+      )
+      : <SubjectsTable />
+      }
     </div>
   );
 };

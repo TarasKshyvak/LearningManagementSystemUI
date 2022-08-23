@@ -12,10 +12,7 @@ export const routes = {
     subjects: '/Subjects',
     learning: '/Learning',
     topics: '/Topics',
-    createTest: '/createTest',
     testing: '/Testing',
     tests:'/Tests',
-    staffChat: 'http://learningmanagementsystemapi-dev.us-east-1.elasticbeanstalk.com/staffChat',
-    questions: '/Questions',
-
+    staffChat: 'https://localhost:7285/staffChat',
 };
